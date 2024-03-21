@@ -115,4 +115,11 @@ public class MemberController {
         }
     }
 
+    @PostMapping("path")
+    public String postMethodName(@RequestBody String entity) {
+        //TODO: process POST request
+        
+        return entity;
+    }
+    
 }
