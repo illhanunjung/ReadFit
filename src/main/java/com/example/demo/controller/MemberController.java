@@ -65,9 +65,12 @@ public class MemberController {
         Member loginMember = memberMapper.memberSelect(mem);
         if (loginMember != null ) {
             session.setAttribute("loginMember", loginMember);
+            
 
             JsonObject resultJson = new JsonObject();
             resultJson.addProperty("name", loginMember.getMem_name());
+            resultJson.addProperty("phone", loginMember.getMem_phone());
+
             return resultJson.toString();
         } else {
             return "로그인 실패";
