@@ -1,14 +1,5 @@
 package com.example.demo.controller;
 
-import com.example.demo.mapper.MemberMapper;
-import com.example.demo.model.Member;
-import com.example.demo.service.MemberService;
-import com.google.gson.Gson;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-
-import jakarta.servlet.http.HttpSession;
-
 import java.util.HashMap;
 import java.util.List;
 
@@ -21,6 +12,15 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.example.demo.mapper.MemberMapper;
+import com.example.demo.model.Member;
+import com.example.demo.service.MemberService;
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+
+import jakarta.servlet.http.HttpSession;
 
 @RestController
 
@@ -117,5 +117,7 @@ public class MemberController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("회원 정보를 찾을 수 없습니다.");
         }
     }
+    
+    
     
 }
