@@ -27,6 +27,7 @@ import jakarta.servlet.http.HttpSession;
 @CrossOrigin(origins = "http://localhost:3000")
 public class MemberController {
 
+    
     @Autowired
     private MemberService memberService;
 
@@ -70,6 +71,7 @@ public class MemberController {
             JsonObject resultJson = new JsonObject();
             resultJson.addProperty("name", loginMember.getMem_name());
             resultJson.addProperty("phone", loginMember.getMem_phone());
+            resultJson.addProperty("profile", loginMember.getMem_profile()); 
 
             return resultJson.toString();
         } else {
