@@ -30,4 +30,5 @@ void updatePassword(Member member);
 void updateProfileImage(@Param("mem_id") String memId, @Param("imagePath") String imagePath);
 
 
+
 }

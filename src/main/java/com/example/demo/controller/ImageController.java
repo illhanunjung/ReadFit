@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.mapper.MemberMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -41,7 +42,7 @@ public class ImageController {
             
 
             // DB에 저장할 이미지 경로 생성
-            String imagePath = "img/uploads/profile/" + filename;
+            String imagePath = filename;
 
             // DB에 이미지 경로 업데이트
             memberMapper.updateProfileImage(memId, imagePath);
@@ -55,4 +56,8 @@ public class ImageController {
         }
        
     }
+
+  
 }
+
+
