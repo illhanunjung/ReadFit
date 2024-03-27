@@ -12,11 +12,13 @@ import java.nio.file.Paths;
 
 @RestController
 @RequestMapping("/api/img")
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "*", allowedHeaders = "*") 
 public class ImageController {
 
     // 이미지를 저장할 경로 설정
     private final Path rootLocation = Paths.get("src/main/resources/static/img/uploads/profile");
+    
+
 
     @Autowired
     private MemberMapper memberMapper;
