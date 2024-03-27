@@ -35,4 +35,7 @@
     <update id="updatePassword" parameterType="com.example.demo.model.Member"> UPDATE MEMBERS SET
         mem_pw = MD5(#{mem_pw}) WHERE mem_id = #{mem_id} </update>
 
+    <update id="updateProfileImage"> UPDATE member SET mem_profile = #{imagePath} WHERE mem_id =
+        #{mem_id} </update>
+
 </mapper>
