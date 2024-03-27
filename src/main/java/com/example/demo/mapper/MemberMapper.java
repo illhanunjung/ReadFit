@@ -3,6 +3,7 @@ package com.example.demo.mapper;
 import com.example.demo.model.Member;
 import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 @Mapper
 public interface MemberMapper {
@@ -25,6 +26,8 @@ public interface MemberMapper {
 void updatePhone(Member member);
 
 void updatePassword(Member member);
+
+void updateProfileImage(@Param("mem_id") String memId, @Param("imagePath") String imagePath);
 
 
 }
