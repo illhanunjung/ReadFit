@@ -16,13 +16,19 @@ public class MemberService {
         return memberMapper.getAllMembers();
     }
 
-    // 회원 등록
-    public void registerMember(Member member) {
+// 회원 등록
+public void registerMember(Member member) {
+    // 아이디 중복 검사
+    if (checkId(member.getMem_id())) {
         memberMapper.registerMember(member);
+    } else {
+        throw new IllegalArgumentException("이미 사용 중인 아이디입니다.");
     }
+}
 
-    // 아이디 중복 체크
-    public boolean checkId(String memId) {
-        return memberMapper.checkId(memId) == null;
-    }
+// 아이디 중복 체크
+public boolean checkId(String memId) {
+    return memberMapper.checkId(memId) == null;
+}
+
 }

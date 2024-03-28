@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -38,15 +39,6 @@ public class MemberController {
         return memberService.getAllMembers();
     }
 
-    @PostMapping("/api/register")
-    public void registerMember(@RequestBody Member member) {
-        memberService.registerMember(member);
-    }
-
-    @GetMapping("/api/checkId/{memId}")
-    public boolean checkId(@PathVariable String memId) {
-        return memberService.checkId(memId);
-    }
 
      @PostMapping("/api/login")
     public String login(HttpSession session, @RequestBody HashMap<String, Object> member) {
@@ -72,10 +64,7 @@ public class MemberController {
         } else {
             return "로그인 실패";
         }
-
-
 }
-
         @PostMapping("/api/logout")
         public String logout(HttpSession session) {         
             session.getAttribute("loginMember");
@@ -116,5 +105,37 @@ public class MemberController {
     }
     
     
+
+    // 회원가입 엔드포인트
+@PostMapping("/api/register")
+public ResponseEntity<?> registerMember(@RequestBody Map<String, String> payload) {
+    Member member = new Member();
+    member.setMem_id(payload.get("mem_id")); // 혹은 카카오 API로부터 받은 고유 ID
+    member.setMem_pw("default_password"); // 실제 서비스에서는 비밀번호를 설정하는 로직 필요
+    member.setMem_name(payload.get("mem_name"));
+    member.setMem_birth(payload.get("mem_birth"));
+    member.setMem_profile(payload.get("mem_profile"));
+    member.setMem_phone(payload.get("mem_phone"));
+    // 나머지 기본값으로 설정할 필드 초기화...
+
+    try {
+        // 회원가입 서비스 호출
+        memberService.registerMember(member);           
+        // 회원가입 성공 응답 반환
+        return ResponseEntity.ok().body("회원가입에 성공하였습니다.");
+    } catch (Exception e) {
+        // 예외 발생 시, 회원가입 실패 응답 반환
+        return ResponseEntity.badRequest().body("회원가입에 실패하였습니다.");
+    }
+}
+
+    // 아이디 중복 체크 엔드포인트
+    @GetMapping("/checkId/{memId}")
+    public ResponseEntity<?> checkId(@PathVariable String memId) {
+        boolean isAvailable = memberService.checkId(memId);
+        return ResponseEntity.ok().body(isAvailable);
+    }
+
     
+
 }
