@@ -4,6 +4,13 @@
 <mapper namespace="com.example.demo.mapper.CommentMapper">
 
     <select id="getCommentsByReviewIdx" resultType="com.example.demo.model.Comment"> SELECT * FROM
-        COMMENTS WHERE board_seq = #{ board_seq} </select>
+        COMMENTS WHERE board_seq = #{ board_seq}
+    </select>
+
+    <!-- CommentMapper.xml에 insert 쿼리 추가 -->
+    <insert id="addComment">
+        INSERT INTO COMMENTS (comment_seq,board_seq, mem_id, comment, comment_at)
+        VALUES (#{comment_seq}, #{board_seq}, #{mem_id}, #{comment}, NOW())
+    </insert>
 
 </mapper>

@@ -31,4 +31,16 @@
         resultType="com.example.demo.model.Member"> SELECT * FROM MEMBERS WHERE mem_id=#{mem_id} and
         mem_phone=#{mem_phone} </select>
 
+    <update id="updatePhone" parameterType="com.example.demo.model.Member"> UPDATE MEMBERS SET
+        mem_phone = #{mem_phone} WHERE mem_id = #{mem_id} </update>
+
+    <update id="updatePassword" parameterType="com.example.demo.model.Member"> UPDATE MEMBERS SET
+        mem_pw = MD5(#{mem_pw}) WHERE mem_id = #{mem_id} </update>
+
+
+    <update id="updateProfileImage"> UPDATE MEMBERS SET mem_profile = #{imagePath} WHERE mem_id =
+        #{mem_id} </update>
+
+
+
 </mapper>
