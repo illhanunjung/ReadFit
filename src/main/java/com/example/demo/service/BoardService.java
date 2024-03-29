@@ -23,4 +23,10 @@ public class BoardService {
         return boardMapper.getBoardByReviewIdx(board_seq);
     }
 
+    public void deletePost(int boardSeq) {
+        boardMapper.deleteCommentsByBoardSeq(boardSeq);
+        boardMapper.deleteBoardBySeq(boardSeq);
+    }
+
+
 }
