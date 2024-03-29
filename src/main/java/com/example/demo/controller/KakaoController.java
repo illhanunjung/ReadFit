@@ -38,7 +38,9 @@ public class KakaoController {
         String tokenRequestUri = "https://kauth.kakao.com/oauth/token";
         
         try {
+            @SuppressWarnings("rawtypes")
             ResponseEntity<HashMap> response = restTemplate.postForEntity(tokenRequestUri, request, HashMap.class);
+            @SuppressWarnings("unchecked")
             HashMap<String, Object> responseBody = response.getBody();
             if(responseBody != null && responseBody.containsKey("access_token")) {
                 String accessToken = (String) responseBody.get("access_token");
@@ -62,6 +64,7 @@ public class KakaoController {
         HttpEntity<?> entity = new HttpEntity<>(headers);
         
         try {
+            @SuppressWarnings("rawtypes")
             ResponseEntity<HashMap> response = restTemplate.exchange(userInfoUri, HttpMethod.GET, entity, HashMap.class);
             return ResponseEntity.ok().body(response.getBody());
         } catch (HttpClientErrorException e) {

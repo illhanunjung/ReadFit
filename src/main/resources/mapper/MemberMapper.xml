@@ -14,9 +14,10 @@
         </insert>
 
     <!-- 아이디 중복 체크 -->
-    <select id="checkId" resultType="com.example.demo.model.Member" parameterType="java.lang.String">
+    <select id="checkId" resultType="java.lang.Integer" parameterType="java.lang.String">
         SELECT COUNT(*) FROM MEMBERS WHERE mem_id = #{memId}
     </select>
+
 
     <select id="memberSelect" parameterType="com.example.demo.model.Member"
         resultType="com.example.demo.model.Member"> SELECT * FROM MEMBERS WHERE mem_id=#{mem_id} and

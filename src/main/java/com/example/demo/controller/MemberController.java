@@ -118,8 +118,8 @@ public class MemberController {
 @PostMapping("/api/register")
 public ResponseEntity<?> registerMember(@RequestBody Map<String, String> payload) {
     Member member = new Member();
-    member.setMem_id(payload.get("mem_id")); // 혹은 카카오 API로부터 받은 고유 ID
-    member.setMem_pw("default_password"); // 실제 서비스에서는 비밀번호를 설정하는 로직 필요
+    member.setMem_id(payload.get("mem_id")); 
+    member.setMem_pw("default_password"); 
     member.setMem_name(payload.get("mem_name"));
     member.setMem_birth(payload.get("mem_birth"));
     member.setMem_profile(payload.get("mem_profile"));
