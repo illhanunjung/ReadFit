@@ -8,7 +8,33 @@
     <select id="getBoardByReviewIdx" resultType="com.example.demo.model.Board"> SELECT * FROM BOARDS
         WHERE board_seq = #{board_seq} </select>
 
+    <delete id="deleteBoardBySeq">
+        DELETE FROM BOARDS WHERE board_seq = #{board_seq}
+    </delete>
+    
+    <delete id="deleteCommentsByBoardSeq">
+        DELETE FROM COMMENTS WHERE board_seq = #{board_seq}
+    </delete>
 
-    <!-- 추가적인 쿼리 등을 작성할 수 있습니다. -->
+    <!-- 게시글 추가 -->
+    <insert id="insertBoard" parameterType="com.example.demo.model.Board">
+        INSERT INTO BOARDS
+        (board_title, board_re_at, mem_id, board_content, board_at, board_img)
+        VALUES
+        (#{board_title}, NOW(), #{mem_id}, #{board_content}, NOW(), #{board_img})
+    </insert>
+    
+    <!-- 게시글 업데이트 -->
+    <update id="updateBoard" parameterType="com.example.demo.model.Board">
+        UPDATE BOARDS
+        SET
+            board_title = #{board_title},
+            board_re_at = #{board_re_at},
+            mem_id = #{mem_id},
+            board_content = #{board_content},
+            board_at = NOW(),
+            board_img = #{board_img}
+        WHERE board_seq = #{board_seq}
+    </update>
 
 </mapper>

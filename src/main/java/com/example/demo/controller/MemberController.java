@@ -30,7 +30,7 @@ public class MemberController {
     @Autowired
     private MemberService memberService;
 
-     @Autowired
+    @Autowired
     private MemberMapper memberMapper;
 
     @GetMapping
@@ -48,9 +48,9 @@ public class MemberController {
         return memberService.checkId(memId);
     }
 
-     @PostMapping("/api/login")
+    @PostMapping("/api/login")
     public String login(HttpSession session, @RequestBody HashMap<String, Object> member) {
-//ResponseEntity<String>
+    //ResponseEntity<String>
 
         Gson gson = new Gson();
         JsonElement jsoelement = gson.toJsonTree(member);
@@ -67,21 +67,23 @@ public class MemberController {
             session.setAttribute("loginMember", loginMember);
 
             JsonObject resultJson = new JsonObject();
+            resultJson.addProperty("id", loginMember.getMem_id());
             resultJson.addProperty("name", loginMember.getMem_name());
+            resultJson.addProperty("birth", loginMember.getMem_birth());
+            resultJson.addProperty("profile", loginMember.getMem_profile());
+            resultJson.addProperty("phone", loginMember.getMem_phone());
+            resultJson.addProperty("role", loginMember.getMem_role());
             return resultJson.toString();
         } else {
             return "로그인 실패";
         }
-
-
-}
+    }
 
         @PostMapping("/api/logout")
-        public String logout(HttpSession session) {         
+        public String logout(HttpSession session) {
             session.getAttribute("loginMember");
             System.out.println("loginMember");
             session.removeAttribute("loginMember");
-                  
             return "로그아웃 성공";
         }
         

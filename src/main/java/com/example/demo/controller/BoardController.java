@@ -6,8 +6,10 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.demo.mapper.BoardMapper;
 import com.example.demo.mapper.CommentMapper;
 import com.example.demo.model.Board;
 import com.example.demo.model.Comment;
@@ -29,7 +32,11 @@ public class BoardController {
     private BoardService boardService;
 
     @Autowired
-    private CommentMapper comment;
+    private BoardMapper boardMapper;
+
+    @Autowired
+    private CommentMapper commentMapper;
+
 
     @GetMapping("/boards")
     public List<Board> getAllBoards() {
@@ -39,8 +46,7 @@ public class BoardController {
     @GetMapping("/boards/{board_seq}")
     public ResponseEntity<Object> getBoardAndCommentsByReviewIdx(@PathVariable int board_seq) {
         Board board = boardService.getBoardByReviewIdx(board_seq);
-        List<Comment> commentList = comment.getCommentsByReviewIdx(board_seq);
-        System.out.println("commentList 값입니다 :" + commentList.toString());
+        List<Comment> commentList = commentMapper.getCommentsByReviewIdx(board_seq);
         if (board != null) {
             Map<String, Object> response = new HashMap<>();
             response.put("board", board);
@@ -57,16 +63,109 @@ public class BoardController {
         @RequestBody Map<String, String> payload) {
         String commentText = payload.get("comment"); // 댓글 내용을 가져옵니다.
         String loginMember = payload.get("loginMember"); // 댓글 내용을 가져옵니다.
-        System.out.println(commentText);
-        System.out.println("로그인한 멤버 : " + loginMember);
         
         // 여기서 댓글 등록을 처리합니다.
         // board_seq와 commentText를 이용하여 새로운 댓글을 생성하거나 저장합니다.
-        Comment inputComment = new Comment(3, board_seq, loginMember, commentText, LocalDateTime.now());
-        System.out.println(inputComment);
-        // comment.addComment(new Comment(0, board_seq, loginMember, commentText, LocalDateTime.now()));
-        comment.addComment(inputComment);
+        Comment inputComment = new Comment(0, board_seq, loginMember, commentText, LocalDateTime.now());
+        commentMapper.addComment(inputComment);
         
         return ResponseEntity.ok().build();
     }
+
+    @DeleteMapping("/deleteComment/{commentSeq}")
+    public ResponseEntity<String> deleteComment(@PathVariable int commentSeq) {
+        System.out.println("여기 들어왔습니까? commentSeq 값은 이것이걸랑요~ : " + commentSeq);
+        // 클라이언트로부터 전송된 commentSeq 값을 추출합니다.
+        int comment_seq = commentSeq;
+
+        // commentSeq를 사용하여 DB에서 댓글을 삭제하는 로직을 작성합니다.
+        // 이 부분은 여러분의 데이터베이스에 맞게 수정해야 합니다.
+        
+        try {
+            // 댓글 삭제
+            commentMapper.deleteCommentBySeq(comment_seq);
+            return ResponseEntity.ok("댓글이 성공적으로 삭제되었습니다.");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("댓글 삭제 중 오류가 발생했습니다.");
+        }
+    }
+
+
+    @DeleteMapping("/deletePost/{boardSeq}")
+    public ResponseEntity<String> deletePost(@PathVariable int boardSeq) {
+        System.out.println("여기 들어왔습니까? boardSeq 값은 이것이걸랑요~ : " + boardSeq);
+        int board_seq = boardSeq;
+        try {
+            // 게시물 삭제
+            boardService.deletePost(board_seq);
+            return ResponseEntity.ok("게시물이 성공적으로 삭제되었습니다.");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("게시물 삭제 중 오류가 발생했습니다.");
+        }
+    }
+
+
+    @PostMapping("/boards/{board_seq}/comments/edit")
+    public ResponseEntity<Object> editCommentToBoard(
+        @PathVariable int board_seq,
+        @RequestBody Map<String, String> payload) {
+        String commentText = payload.get("comment"); // 댓글 내용을 가져옵니다.
+        String comment_seq_str = payload.get("comment_seq"); // 댓글 내용을 가져옵니다.
+        int comment_seq = Integer.parseInt(comment_seq_str);
+        System.out.println("여기로 제발 넘어와라 지금쯤이면 집에 갔겠다!!!");
+        System.out.println("commentText : " + commentText);
+        System.out.println("comment_seq : " + comment_seq);
+        
+
+        try {
+            commentMapper.commentEdit(commentText, comment_seq);
+            return ResponseEntity.ok("댓글이 성공적으로 수정되었습니다.");
+        } catch (Exception e) {
+            // 업데이트 과정에서 예외가 발생하면 실패 응답을 반환합니다.
+            return ResponseEntity.badRequest().body("댓글 수정에 실패하였습니다.");
+        }
+    }
+
+
+    @GetMapping("/Writepost/{board_seq}")
+    public ResponseEntity<Board> getBoardBySeq(@PathVariable int board_seq) {
+        // System.out.println("여기 들어왔습니까? 게시글 수정하려 합니다!");
+        // System.out.println("선택된 board_seq : " + board_seq);
+        try {
+            // boardSeq를 사용하여 게시물의 내용을 가져옵니다.
+            Board editPost = boardService.getBoardByReviewIdx(board_seq);
+            // System.out.println("editPost의 정보입니다. : " + editPost.toString());
+
+            return ResponseEntity.ok().body(editPost);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
+    }
+
+
+
+    @PostMapping("/boards/boardWrite")
+    public ResponseEntity<?> writeBoard(@RequestBody Board newBoard) {
+        System.out.println("board_seq값 입니다. : " + newBoard.getBoard_seq());
+        Board searchBoard = boardService.getBoardByReviewIdx(newBoard.getBoard_seq());
+        try {
+            if (searchBoard == null) {
+                // searchBoard가 null인 경우, 새 게시물을 추가
+                boardMapper.insertBoard(newBoard);
+            } else {
+                // searchBoard가 null이 아닌 경우, 기존 게시물을 업데이트
+                // 필요한 경우, newBoard의 정보로 searchBoard의 필드를 업데이트
+                // 예: searchBoard.setTitle(newBoard.getTitle());
+                // 모든 필요한 필드를 업데이트한 후 save 호출
+                boardMapper.updateBoard(newBoard); // 또는 boardService.saveBoard(searchBoard); 업데이트된 객체를 저장
+            }
+            return new ResponseEntity<>("success", HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>("fail", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
 }
