@@ -1,8 +1,11 @@
 package com.example.demo.mapper;
 
-import com.example.demo.model.Member;
 import java.util.List;
+
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+
+import com.example.demo.model.Member;
 
 @Mapper
 public interface MemberMapper {
@@ -20,4 +23,14 @@ public interface MemberMapper {
     Member memberSelect(Member member);
     Member memberFindId(Member member);
     Member memberFindPw(Member member);
+
+    // 전화번호 업데이트 메소드
+void updatePhone(Member member);
+
+void updatePassword(Member member);
+
+void updateProfileImage(@Param("mem_id") String memId, @Param("imagePath") String imagePath);
+
+
+
 }

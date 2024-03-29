@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+
 import java.util.HashMap;
 import java.util.List;
 
@@ -27,6 +28,7 @@ import jakarta.servlet.http.HttpSession;
 @CrossOrigin(origins = "http://localhost:3000")
 public class MemberController {
 
+    
     @Autowired
     private MemberService memberService;
 
@@ -65,6 +67,7 @@ public class MemberController {
         Member loginMember = memberMapper.memberSelect(mem);
         if (loginMember != null ) {
             session.setAttribute("loginMember", loginMember);
+            
 
             JsonObject resultJson = new JsonObject();
             resultJson.addProperty("id", loginMember.getMem_id());
@@ -118,5 +121,60 @@ public class MemberController {
     }
     
     
+    @PostMapping("/api/updatePhone")
+public ResponseEntity<?> updatePhone(HttpSession session, @RequestBody HashMap<String, String> phoneUpdateRequest) {
+    // 세션에서 로그인한 사용자 정보를 가져옵니다.
+    Member loginMember = (Member) session.getAttribute("loginMember");
     
+    if (loginMember == null) {
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("로그인이 필요합니다.");
+    }
+    
+    // 요청에서 새 전화번호를 가져옵니다.
+    String newPhone = phoneUpdateRequest.get("newPhone");
+    
+    // 입력값 검증 (실제로는 좀 더 철저한 검증이 필요합니다)
+    if (newPhone == null || newPhone.isEmpty()) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("새 전화번호가 입력되지 않았습니다.");
+    }
+    
+    try {
+        // 사용자 정보를 업데이트합니다.
+        Member updatedMember = new Member();
+        updatedMember.setMem_id(loginMember.getMem_id());
+        updatedMember.setMem_phone(newPhone);
+        
+        // DB에서 전화번호를 업데이트합니다.
+        memberMapper.updatePhone(updatedMember);
+        
+        // 세션 정보를 업데이트합니다.
+        session.setAttribute("loginMember", updatedMember);
+        
+        return ResponseEntity.ok("전화번호가 변경되었습니다.");
+    } catch (Exception e) {
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("전화번호 변경 중 오류가 발생했습니다.");
+    }
+}
+
+@PostMapping("/api/updatePassword")
+public ResponseEntity<?> updatePassword(HttpSession session, @RequestBody HashMap<String, String> passwordUpdateRequest) {
+    Member loginMember = (Member) session.getAttribute("loginMember");
+    
+    if (loginMember == null) {
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("로그인이 필요합니다.");
+    }
+
+    String newPassword = passwordUpdateRequest.get("newPassword");
+    
+    
+    try {
+        loginMember.setMem_pw(newPassword); // 실제로는 비밀번호를 해시화해서 저장해야 합니다.
+        memberMapper.updatePassword(loginMember);
+        return ResponseEntity.ok("비밀번호가 변경되었습니다.");
+    } catch (Exception e) {
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("비밀번호 변경 중 오류가 발생했습니다.");
+    }
+}
+
+
 }
