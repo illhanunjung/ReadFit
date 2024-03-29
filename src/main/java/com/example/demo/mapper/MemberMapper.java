@@ -4,6 +4,7 @@ import com.example.demo.model.Member;
 import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 
 @Mapper
 public interface MemberMapper {
@@ -28,6 +29,8 @@ void updatePhone(Member member);
 void updatePassword(Member member);
 
 void updateProfileImage(@Param("mem_id") String memId, @Param("imagePath") String imagePath);
+
+String getProfileImage(@Param("memId") String memId);
 
 
 
