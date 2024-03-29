@@ -1,9 +1,18 @@
 package com.example.demo.controller;
 
+import com.example.demo.mapper.MemberMapper;
+
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -16,13 +25,16 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.example.demo.mapper.MemberMapper;
 
+
 @RestController
 @RequestMapping("/api/img")
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "*", allowedHeaders = "*") 
 public class ImageController {
 
     // 이미지를 저장할 경로 설정
     private final Path rootLocation = Paths.get("src/main/resources/static/img/uploads/profile");
+    
+
 
     @Autowired
     private MemberMapper memberMapper;
@@ -53,7 +65,7 @@ public class ImageController {
             memberMapper.updateProfileImage(memId, imagePath);
 
             // 업로드 성공 응답 반환
-            return ResponseEntity.ok().body("File uploaded successfully: " + filename);
+            return ResponseEntity.ok().body(filename);
         } catch (IOException e) {
             // 업로드 실패 시 예외 처리
             e.printStackTrace();

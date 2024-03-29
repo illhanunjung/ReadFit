@@ -27,7 +27,4 @@ public class Member {
         this.mem_pw = mem_pw;
     }
 
-
-
-
 }
