@@ -1,9 +1,11 @@
 package com.example.demo.mapper;
 
-import com.example.demo.model.Member;
 import java.util.List;
+
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+
+import com.example.demo.model.Member;
 
 @Mapper
 public interface MemberMapper {
