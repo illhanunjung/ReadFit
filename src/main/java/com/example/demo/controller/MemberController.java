@@ -115,7 +115,7 @@ public class MemberController {
 
 
     // 회원가입 엔드포인트
-@PostMapping("/api/register")
+@PostMapping("/members/register")
 public ResponseEntity<?> registerMember(@RequestBody Map<String, String> payload) {
     Member member = new Member();
     member.setMem_id(payload.get("mem_id")); 
