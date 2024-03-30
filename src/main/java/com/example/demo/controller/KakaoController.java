@@ -55,6 +55,8 @@ public class KakaoController {
         }
     }
     
+    
+
     private ResponseEntity<?> getUserInfo(String accessToken) {
         RestTemplate restTemplate = new RestTemplate();
         String userInfoUri = "https://kapi.kakao.com/v2/user/me";

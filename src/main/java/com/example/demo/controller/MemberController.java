@@ -22,6 +22,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
+import ch.qos.logback.classic.Logger;
 import jakarta.servlet.http.HttpSession;
 
 @RestController
@@ -110,35 +111,20 @@ public class MemberController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("회원 정보를 찾을 수 없습니다.");
         }
     }
-    
-    
 
-
-    // 회원가입 엔드포인트
-@PostMapping("/members/register")
-public ResponseEntity<?> registerMember(@RequestBody Map<String, String> payload) {
-    Member member = new Member();
-    member.setMem_id(payload.get("mem_id")); 
-    member.setMem_pw("default_password"); 
-    member.setMem_name(payload.get("mem_name"));
-    member.setMem_birth(payload.get("mem_birth"));
-    member.setMem_profile(payload.get("mem_profile"));
-    member.setMem_phone(payload.get("mem_phone"));
-    // 나머지 기본값으로 설정할 필드 초기화...
-
-    try {
-        // 회원가입 서비스 호출
-        memberService.registerMember(member);           
-        // 회원가입 성공 응답 반환
-        return ResponseEntity.ok().body("회원가입에 성공하였습니다.");
-    } catch (Exception e) {
-        // 예외 발생 시, 회원가입 실패 응답 반환
-        return ResponseEntity.badRequest().body("회원가입에 실패하였습니다.");
+    @PostMapping("/api/members/register")
+    public ResponseEntity<?> registerMember(@RequestBody Member member) {
+        try {
+            memberService.registerMember(member);           
+            return ResponseEntity.ok().body("회원가입에 성공하였습니다.");
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("회원가입에 실패하였습니다.");
+        }
     }
-}
+    
 
     // 아이디 중복 체크 엔드포인트
-    @GetMapping("/checkId/{memId}")
+    @GetMapping("/api/checkId/{memId}")
     public ResponseEntity<?> checkId(@PathVariable String memId) {
         boolean isAvailable = memberService.checkId(memId);
         return ResponseEntity.ok().body(isAvailable);

@@ -19,18 +19,16 @@ public class MemberService {
     }
 
 // 회원 등록
-public void registerMember(Member member) {
-    // 아이디 중복 검사
-    if (checkId(member.getMem_id())) {
+    public void registerMember(Member member) throws Exception {
         memberMapper.registerMember(member);
-    } else {
-        throw new IllegalArgumentException("이미 사용 중인 아이디입니다.");
     }
-}
+
 
 // 아이디 중복 체크
-public boolean checkId(String memId) {
-    return memberMapper.checkId(memId) == null;
-}
+    public boolean checkId(String memId) {
+        Integer count = memberMapper.checkId(memId);
+        return count != null && count > 0;
+    }
+
 
 }
