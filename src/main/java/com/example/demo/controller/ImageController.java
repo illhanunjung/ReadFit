@@ -4,8 +4,11 @@ import com.example.demo.mapper.MemberMapper;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -14,16 +17,15 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
 
-import com.example.demo.mapper.MemberMapper;
+
 
 
 @RestController
@@ -73,6 +75,39 @@ public class ImageController {
         }
 
     }
+
+
+// 프로필 이미지 가져오기
+@GetMapping("/profile/{mem_id}")
+public ResponseEntity<?> getProfileImage(@PathVariable("mem_id") String memId) {
+    try {
+        // 데이터베이스에서 사용자의 프로필 이미지 경로를 가져옴
+        String profileImagePath = memberMapper.getProfileImage(memId);
+        if (profileImagePath != null) {
+            // 이미지 파일로부터 Resource 객체 생성
+            Path imagePath = rootLocation.resolve(profileImagePath);
+            Resource resource = new UrlResource(imagePath.toUri());
+            
+            if (resource.exists() && resource.isReadable()) {
+                // 이미지를 성공적으로 읽어서 클라이언트에게 반환
+                return ResponseEntity.ok()
+                        .contentType(MediaType.IMAGE_PNG)
+                        .body(resource);
+            } else {
+                // 이미지를 찾을 수 없음을 클라이언트에게 반환
+                return ResponseEntity.notFound().build();
+            }
+        } else {
+            // 프로필 이미지가 없을 경우 빈 문자열 반환
+            return ResponseEntity.ok().body("");
+        }
+    } catch (Exception e) {
+        // 에러 발생 시 클라이언트에게 예외 메시지 반환
+        e.printStackTrace();
+        return ResponseEntity.badRequest().body("에러 " + memId);
+        
+    }
+}
 
 
 }

@@ -39,8 +39,14 @@ public class BoardController {
 
 
     @GetMapping("/boards")
-    public List<Board> getAllBoards() {
-        return boardService.getAllBoards();
+    public ResponseEntity<Object> getAllBoards() {
+        List<Board> boardList = boardService.getAllBoards();
+        List<Map<Integer, Integer>> boardClickCountList = boardMapper.getBoardClickCountsAsList();
+        Map<String, Object> response = new HashMap<>();
+        response.put("boardList", boardList);
+        response.put("boardClickCountList", boardClickCountList);
+        System.out.println();
+        return ResponseEntity.ok().body(response);
     }
 
     @GetMapping("/boards/{board_seq}")
@@ -165,6 +171,20 @@ public class BoardController {
         } catch (Exception e) {
             e.printStackTrace();
             return new ResponseEntity<>("fail", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+
+    @PostMapping("/increaseClickCount")
+    public ResponseEntity<?> increaseClickCount(@RequestBody Map<String, Integer> payload) {
+        int board_seq = payload.get("board_seq");
+        System.out.println("board값은 얼마입니까?" + board_seq);
+
+        try {
+            boardMapper.increaseClickCount(board_seq); // 클릭 수 증가 처리
+            return ResponseEntity.ok().build(); // 성공 응답 반환
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build(); // 서버 오류 발생 시 500 응답 반환
         }
     }
 

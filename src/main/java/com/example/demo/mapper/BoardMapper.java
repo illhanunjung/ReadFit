@@ -1,6 +1,6 @@
 package com.example.demo.mapper;
-
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
@@ -14,4 +14,6 @@ public interface BoardMapper {
     void deleteCommentsByBoardSeq(int boardSeq);
     void insertBoard(Board board);
     void updateBoard(Board board);
+    void increaseClickCount(int board_seq);
+    List<Map<Integer, Integer>> getBoardClickCountsAsList();
 }
