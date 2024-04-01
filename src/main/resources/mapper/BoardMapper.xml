@@ -3,7 +3,7 @@
 
 <mapper namespace="com.example.demo.mapper.BoardMapper">
 
-    <select id="getAllBoards" resultType="com.example.demo.model.Board"> SELECT * FROM BOARDS </select>
+    <select id="getAllBoards" resultType="com.example.demo.model.Board"> SELECT * FROM BOARDS ORDER BY board_seq ASC </select>
 
     <select id="getBoardByReviewIdx" resultType="com.example.demo.model.Board"> SELECT * FROM BOARDS
         WHERE board_seq = #{board_seq} </select>
@@ -36,5 +36,20 @@
             board_img = #{board_img}
         WHERE board_seq = #{board_seq}
     </update>
+
+    <!-- increaseClickCount 메서드를 위한 SQL 구문 -->
+    <update id="increaseClickCount">
+        UPDATE CLICK_COUNT_BOARD
+        SET count = count + 1
+        WHERE board_seq = #{board_seq}
+    </update>
+
+
+    <select id="getBoardClickCountsAsList" resultType="map">
+        SELECT board_seq, count
+        FROM CLICK_COUNT_BOARD
+        ORDER BY board_seq ASC
+    </select>
+    
 
 </mapper>

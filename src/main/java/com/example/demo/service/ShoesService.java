@@ -25,5 +25,11 @@ public class ShoesService {
     public List<Shoes> getAllShoesWithReviews() {
         return shoesMapper.getAllShoesWithReviews();
     }
+
+ 
+
+    public List<Shoes>  getShoesByCategorySeqs(int category_seq) {
+        return shoesMapper. getShoesByCategorySeqs(category_seq);
+    }
 }
 

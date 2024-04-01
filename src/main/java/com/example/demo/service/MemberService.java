@@ -18,13 +18,17 @@ public class MemberService {
         return memberMapper.getAllMembers();
     }
 
-    // 회원 등록
-    public void registerMember(Member member) {
+// 회원 등록
+    public void registerMember(Member member) throws Exception {
         memberMapper.registerMember(member);
     }
 
-    // 아이디 중복 체크
+
+// 아이디 중복 체크
     public boolean checkId(String memId) {
-        return memberMapper.checkId(memId) == null;
+        Integer count = memberMapper.checkId(memId);
+        return count != null && count > 0;
     }
+
+
 }
