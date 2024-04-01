@@ -41,4 +41,13 @@ public List<Shoes> getShoesDetailsByCategory(@PathVariable String parentCategory
     return shoesService.getShoesByCategorySeq(parentCategoryName);
 }
 
+
+
+
+@GetMapping("/shoe/{parentCategoryName}/{category_seq}")
+public List<Shoes> getShoesByCategorySeqs(@PathVariable int category_seq) {
+    
+    return shoesService.getShoesByCategorySeqs(category_seq);
+}
+
 }
