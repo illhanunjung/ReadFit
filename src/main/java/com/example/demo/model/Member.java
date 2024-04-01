@@ -3,8 +3,12 @@ package com.example.demo.model;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @Setter
 public class Member {
@@ -23,8 +27,4 @@ public class Member {
         this.mem_pw = mem_pw;
     }
 
-    public Member(){
-      
-    }
-    
 }

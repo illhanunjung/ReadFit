@@ -8,12 +8,18 @@
 
 
     <!-- 회원 등록 -->
-    <insert id="registerMember"> INSERT INTO MEMBERS (mem_id, mem_pw, mem_name, mem_birth,
-        mem_profile, mem_phone) VALUES (#{mem_id}, #{mem_pw}, #{mem_name}, #{mem_birth},
-        #{mem_profile}, #{mem_phone}) </insert>
+    <insert id="registerMember"> 
+        INSERT INTO MEMBERS (mem_id, mem_pw, mem_name, mem_birth,mem_profile, mem_phone) 
+        VALUES (#{mem_id}, MD5(#{mem_pw}), #{mem_name}, #{mem_birth}, #{mem_profile}, #{mem_phone}) 
+        </insert>
 
     <!-- 아이디 중복 체크 -->
-    <select id="checkId" resultType="int"> SELECT COUNT(*) FROM MEMBERS WHERE mem_id = #{memId} </select>
+    <select id="checkId" resultType="java.lang.Integer" parameterType="java.lang.String">
+        SELECT COUNT(*) FROM MEMBERS WHERE mem_id = #{memId}
+    </select>
+
+
+
 
 
     <select id="memberSelect" parameterType="com.example.demo.model.Member"

@@ -16,7 +16,7 @@ public interface MemberMapper {
     void registerMember(Member member);
 
     // 아이디 중복 체크 메소드
-    Member checkId(String memId);
+    Integer checkId(String memId);
 
     Member members(String mem_id,String mem_pw);
 
