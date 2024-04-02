@@ -50,4 +50,6 @@ public List<Shoes> getShoesByCategorySeqs(@PathVariable int category_seq) {
     return shoesService.getShoesByCategorySeqs(category_seq);
 }
 
+
+
 }
