@@ -27,4 +27,7 @@
         SHOES s LEFT JOIN REVIEWS r ON s.shoe_seq = r.shoe_seq LEFT JOIN CATEGORIES c ON
         s.category_seq = c.category_seq WHERE s.category_seq = #{category_seq} GROUP BY s.shoe_seq; </select>
 
+
+   
+
 </mapper>
