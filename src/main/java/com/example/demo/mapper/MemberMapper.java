@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
 
 import com.example.demo.model.Member;
 
@@ -33,7 +32,5 @@ void updatePassword(Member member);
 void updateProfileImage(@Param("mem_id") String memId, @Param("imagePath") String imagePath);
 
 String getProfileImage(@Param("memId") String memId);
-
-
 
 }

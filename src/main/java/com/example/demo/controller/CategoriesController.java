@@ -20,7 +20,7 @@ public class CategoriesController {
     @Autowired
     private CategoriesService categoriesService;
 
-     @GetMapping("/categories/{category_seq}")
+    @GetMapping("/categories/{category_seq}")
     public List<Categories>  getCategoriesIdx(@PathVariable int category_seq) {
         return categoriesService.getCategoriesIdx(category_seq);
     }

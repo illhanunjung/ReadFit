@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.demo.mapper.ReviewMapper">
+
+    <select id="ReviewKeywordList" >
+        SELECT DISTINCT(keyword_name) as kn
+        FROM KEYWORDS
+        WHERE review_seq IN (
+            SELECT review_seq
+            FROM REVIEWS
+            WHERE shoe_seq = #{shoe_seq})
+    </select>
+
+    <!-- <select id="ReviewList" >
+        SELECT keyword_text FROM KEYWORDS WHERE keyword_name = #{keyword} AND review_seq IN (SELECT DISTINCT(review_seq) as rs FROM REVIEWS WHERE shoe_seq=#{shoe_seq});
+    </select> -->
+
+
+    <select id="ReviewList" >
+        SELECT SUBSTRING(r.review, k.start_idx+1, k.end_idx - k.start_idx) AS keyword_review
+          FROM REVIEWS r JOIN KEYWORDS k
+            ON r.review_seq = k.review_seq
+         WHERE k.keyword_name = #{keyword}
+           AND r.review_seq IN (SELECT DISTINCT(review_seq) as rs FROM REVIEWS WHERE shoe_seq=#{shoe_seq});
+    </select>
+
+    
+
+</mapper>
