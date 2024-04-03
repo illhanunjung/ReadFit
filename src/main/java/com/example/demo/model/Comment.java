@@ -20,6 +20,8 @@ public class Comment {
         this.comment_at = comment_at;
     }
 
-    // 생성자 이후의 내용
+        // 기본 생성자
+        public Comment() {
+        }
 }
 

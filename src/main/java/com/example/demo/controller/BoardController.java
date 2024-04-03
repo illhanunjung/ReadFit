@@ -38,6 +38,8 @@ public class BoardController {
     private CommentMapper commentMapper;
 
 
+
+    
     @GetMapping("/boards")
     public ResponseEntity<Object> getAllBoards() {
         List<Board> boardList = boardService.getAllBoards();
@@ -187,5 +189,21 @@ public class BoardController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build(); // 서버 오류 발생 시 500 응답 반환
         }
     }
+
+        @GetMapping("/boards/{board_seq}/comments")
+    public ResponseEntity<?> getCommentsByBoardSeq(@PathVariable int board_seq) {
+        try {
+            List<Comment> commentList = commentMapper.getCommentsByBoardSeq(board_seq);
+            if (!commentList.isEmpty()) {
+                return ResponseEntity.ok(commentList);
+            } else {
+                return ResponseEntity.notFound().build();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("댓글 조회 중 오류가 발생했습니다.");
+        }
+    }
+
 
 }

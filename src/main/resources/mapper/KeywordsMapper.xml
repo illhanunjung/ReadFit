@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.KeywordsMapper">
+
+    <select id="selectTopKeywordsByParentCategory" resultType="com.example.demo.model.KeywordCount">
+        SELECT k.keyword_name AS keywordName, COUNT(k.keyword_seq) AS totalCount FROM KEYWORDS k
+        JOIN REVIEWS r ON k.review_seq = r.review_seq JOIN SHOES s ON r.shoe_seq = s.shoe_seq JOIN
+        CATEGORIES c ON s.category_seq = c.category_seq WHERE s.parent_category_seq_name =
+        #{parent_category_seq_name} GROUP BY k.keyword_name ORDER BY totalCount DESC LIMIT 6 </select>
+
+</mapper>
