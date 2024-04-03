@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.demo.model.KeywordCount;
 import com.example.demo.model.Shoes;
 import com.example.demo.service.ShoesService;
 
@@ -34,12 +35,20 @@ public class ShoesController {
     public List<Shoes> getAllShoes() {
         return shoesService.getAllShoesWithReviews();
     }
-
+    
   @GetMapping("/shoe/{parentCategoryName}")
 public List<Shoes> getShoesDetailsByCategory(@PathVariable String parentCategoryName) {
     
     return shoesService.getShoesByCategorySeq(parentCategoryName);
 }
+
+  // 카테고리명을 기반으로 상위 10개의 상품과 각 상품의 리뷰 정보를 반환
+    @GetMapping("/shoe/top/{parentCategoryName}")
+    public List<Shoes> getShoesByCategorySeqtop(@PathVariable String parentCategoryName) {
+        return shoesService.getShoesByCategorySeqtop(parentCategoryName);
+    }
+
+  
 
 
 
