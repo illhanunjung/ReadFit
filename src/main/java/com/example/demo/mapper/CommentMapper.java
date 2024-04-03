@@ -19,4 +19,6 @@ public interface CommentMapper {
     void deleteCommentBySeq(int comment_seq);
 
     void commentEdit(String commentText, int comment_seq);
+
+    List<Comment> getCommentsByBoardSeq(int board_seq);
 }
