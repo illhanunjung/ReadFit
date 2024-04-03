@@ -3,9 +3,13 @@ package com.example.demo.controller;
 import org.springframework.web.bind.annotation.*;
 
 import com.example.demo.model.Favorites;
+import com.example.demo.model.Shoes;
 import com.example.demo.service.FavoritesService;
+import com.example.demo.service.ShoesService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+
 import java.util.List;
 
 @RestController
@@ -31,4 +35,11 @@ public class FavoritesController {
     public List<Favorites> getFavorites(@RequestParam String mem_id) {
         return favoritesService.getFavorites(mem_id);
     }
+
+    @GetMapping("/favorites/{mem_id}")
+    public ResponseEntity<List<Shoes>> getFavoriteShoes(@PathVariable String mem_id) {
+        List<Shoes> favoriteShoes = favoritesService.getFavoriteShoesByMemberId(mem_id);
+        return ResponseEntity.ok().body(favoriteShoes);
+    }
+
 }
