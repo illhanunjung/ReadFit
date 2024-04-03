@@ -16,6 +16,12 @@
         DELETE FROM COMMENTS WHERE board_seq = #{board_seq}
     </delete>
 
+    <!-- MyBatis mapper XML for fetching comments by board_seq -->
+    <select id="getCommentsByBoardSeq" resultType="com.example.demo.model.Comment">
+        SELECT * FROM comments WHERE board_seq = #{board_seq}
+    </select>
+
+
     <!-- 게시글 추가 -->
     <insert id="insertBoard" parameterType="com.example.demo.model.Board">
         INSERT INTO BOARDS

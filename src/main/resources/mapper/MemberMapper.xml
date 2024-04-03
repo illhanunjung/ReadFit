@@ -18,8 +18,15 @@
         SELECT COUNT(*) FROM MEMBERS WHERE mem_id = #{memId}
     </select>
 
+    <!-- 회원 영구정지 -->
+    <update id="suspendMember">
+        UPDATE MEMBERS SET mem_role = 2 WHERE mem_id = #{mem_id}
+    </update>
 
-
+    <!-- 회원 정지 해제 -->
+    <update id="unsuspendMember">
+        UPDATE MEMBERS SET mem_role = 1 WHERE mem_id = #{mem_id}
+    </update>
 
 
     <select id="memberSelect" parameterType="com.example.demo.model.Member"

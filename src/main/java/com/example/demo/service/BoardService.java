@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.demo.mapper.BoardMapper;
 import com.example.demo.model.Board;
+import com.example.demo.model.Comment;
 
 @Service
 public class BoardService {
@@ -26,6 +27,10 @@ public class BoardService {
     public void deletePost(int boardSeq) {
         boardMapper.deleteCommentsByBoardSeq(boardSeq);
         boardMapper.deleteBoardBySeq(boardSeq);
+    }
+    
+    public List<Comment> getCommentsByBoardSeq(int board_seq) {
+        return boardMapper.getCommentsByBoardSeq(board_seq);
     }
 
 
