@@ -2,6 +2,8 @@ package com.example.demo.service;
 
 import com.example.demo.mapper.KeywordsMapper;
 import com.example.demo.model.KeywordCount;
+import com.example.demo.model.Keywords;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,5 +21,9 @@ public class KeywordsService {
 
     public List<KeywordCount> getTopKeywordsByParentCategory(String parent_category_seq_name) {
         return keywordsMapper.selectTopKeywordsByParentCategory(parent_category_seq_name);
+    }
+
+    public List<Keywords> selectKeywordsByshoeseq(int shoe_seq) {
+        return keywordsMapper.selectKeywordsByshoeseq(shoe_seq);
     }
 }

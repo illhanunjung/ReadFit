@@ -8,4 +8,11 @@
         CATEGORIES c ON s.category_seq = c.category_seq WHERE s.parent_category_seq_name =
         #{parent_category_seq_name} GROUP BY k.keyword_name ORDER BY totalCount DESC LIMIT 6 </select>
 
+        <select id="selectKeywordsByshoeseq" resultType="com.example.demo.model.Keywords">
+        SELECT k.keyword_seq, k.review_seq, k.keyword_name, k.start_idx, k.end_idx, k.keyword_polarity
+        FROM REVIEWS r
+        JOIN KEYWORDS k ON r.review_seq = k.review_seq
+        WHERE r.shoe_seq = #{shoe_seq}
+        </select>
+
 </mapper>
