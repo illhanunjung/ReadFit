@@ -35,12 +35,20 @@ public class ShoesController {
     public List<Shoes> getAllShoes() {
         return shoesService.getAllShoesWithReviews();
     }
-
+    
   @GetMapping("/shoe/{parentCategoryName}")
 public List<Shoes> getShoesDetailsByCategory(@PathVariable String parentCategoryName) {
     
     return shoesService.getShoesByCategorySeq(parentCategoryName);
 }
+
+  // 카테고리명을 기반으로 상위 10개의 상품과 각 상품의 리뷰 정보를 반환
+    @GetMapping("/shoe/top/{parentCategoryName}")
+    public List<Shoes> getShoesByCategorySeqtop(@PathVariable String parentCategoryName) {
+        return shoesService.getShoesByCategorySeqtop(parentCategoryName);
+    }
+
+  
 
 
 
@@ -51,9 +59,11 @@ public List<Shoes> getShoesByCategorySeqs(@PathVariable int category_seq) {
     return shoesService.getShoesByCategorySeqs(category_seq);
 }
 
+
 @GetMapping("/rboard/{shoe_seq}")
 public List<Reviews> getShoes(@PathVariable int shoe_seq) {
        
     return shoesService.getShoes(shoe_seq);
 }
+
 }
