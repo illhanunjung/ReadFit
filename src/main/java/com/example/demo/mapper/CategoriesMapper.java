@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.example.demo.model.Categories;
+import com.example.demo.model.Shoes;
 
 @Mapper
 public interface CategoriesMapper {
@@ -13,6 +14,7 @@ public interface CategoriesMapper {
 
     List<Categories> getCategories();
 
-    // CommentMapper.java에 메서드 추가
-    // void addComment(Comment comment);
+
+
+
 }

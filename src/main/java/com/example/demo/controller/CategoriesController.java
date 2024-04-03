@@ -10,7 +10,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.model.Categories;
+import com.example.demo.model.Shoes;
 import com.example.demo.service.CategoriesService;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 @RestController
 @RequestMapping("/api")
@@ -30,6 +33,7 @@ public class CategoriesController {
     public List<Categories>  getCategories() {
         return categoriesService.getCategories();
     }
+
 
 
 

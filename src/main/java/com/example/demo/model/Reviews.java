@@ -16,5 +16,12 @@ public class Reviews {
     private String  review_status;
     private Date review_at;
 
+    // 리뷰총수와 평균별점
+    private int reviewCount;
+    private double averageRating;
+
+    private String shoe;
+    private int shoe_price;
+    private String shoe_img;
 
 }

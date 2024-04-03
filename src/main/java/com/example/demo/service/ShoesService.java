@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.mapper.ShoesMapper;
+import com.example.demo.model.Reviews;
 import com.example.demo.model.Shoes;
 
 @Service
@@ -31,5 +32,10 @@ public class ShoesService {
     public List<Shoes>  getShoesByCategorySeqs(int category_seq) {
         return shoesMapper. getShoesByCategorySeqs(category_seq);
     }
-}
+    
+    public List<Reviews> getShoes(int shoe_seq) {
+        
+        return shoesMapper.getShoes(shoe_seq);
+    }
 
+}

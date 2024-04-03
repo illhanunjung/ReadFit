@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.demo.model.Reviews;
 import com.example.demo.model.Shoes;
 import com.example.demo.service.ShoesService;
 
@@ -50,4 +51,9 @@ public List<Shoes> getShoesByCategorySeqs(@PathVariable int category_seq) {
     return shoesService.getShoesByCategorySeqs(category_seq);
 }
 
+@GetMapping("/rboard/{shoe_seq}")
+public List<Reviews> getShoes(@PathVariable int shoe_seq) {
+       
+    return shoesService.getShoes(shoe_seq);
+}
 }

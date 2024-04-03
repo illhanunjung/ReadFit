@@ -9,5 +9,6 @@
     <select id="getCategories" resultType="com.example.demo.model.Categories"> SELECT * FROM
         CATEGORIES </select>
 
-
+    <select id="getShoes" resultType="com.example.demo.model.Shoes"> SELECT * FROM
+        SHOES WHERE shoe_seq = #{shoe_seq}</select>
 </mapper>
