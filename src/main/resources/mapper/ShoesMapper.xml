@@ -11,6 +11,22 @@
         c.category_seq GROUP BY s.shoe_seq HAVING parent_category_seq_name =
         #{parent_category_seq_name}; </select>
 
+
+    <select id="getShoesByCategorySeqtop" resultType="com.example.demo.model.Shoes">SELECT
+        s.shoe_seq, s.category_seq, c.category, s.shoe, s.shoe_price, s.shoe_img,
+        s.parent_category_seq, s.parent_category_seq_name, IFNULL(COUNT(r.review_seq), 0) AS
+        reviewCount, IFNULL(AVG(CAST(r.review_rating AS DECIMAL(10, 2))), 0) AS averageRating FROM
+        SHOES s LEFT JOIN REVIEWS r ON s.shoe_seq = r.shoe_seq LEFT JOIN CATEGORIES c ON
+        s.category_seq = c.category_seq WHERE s.parent_category_seq_name =
+        #{parent_category_seq_name} GROUP BY s.shoe_seq HAVING reviewCount >= 40 ORDER BY RAND()
+        LIMIT 10;</select>
+
+
+    <!-- 상품별 리뷰 정보 가져오기 -->
+    <select id="selectReviewsByShoeSeq" resultType="com.example.demo.model.Reviews"> SELECT * FROM
+        REVIEWS WHERE shoe_seq = #{shoe_seq} </select>
+
+
     <select id="getShoess" resultType="com.example.demo.model.Shoes"> SELECT * FROM SHOES </select>
 
     <select id="getAllShoesWithReviews" resultType="com.example.demo.model.Shoes"> SELECT
@@ -19,5 +35,13 @@
         reviewCount, IFNULL(AVG(CAST(r.review_rating AS DECIMAL(10, 2))), 0) AS averageRating FROM
         SHOES s LEFT JOIN REVIEWS r ON s.shoe_seq = r.shoe_seq LEFT JOIN CATEGORIES c ON
         s.category_seq = c.category_seq GROUP BY s.shoe_seq;</select>
+
+    <select id="getShoesByCategorySeqs" resultType="com.example.demo.model.Shoes"> SELECT
+        s.shoe_seq, s.category_seq, c.category, s.shoe, s.shoe_price, s.shoe_img,
+        s.parent_category_seq, s.parent_category_seq_name, IFNULL(COUNT(r.review_seq), 0) AS
+        reviewCount, IFNULL(AVG(CAST(r.review_rating AS DECIMAL(10, 2))), 0) AS averageRating FROM
+        SHOES s LEFT JOIN REVIEWS r ON s.shoe_seq = r.shoe_seq LEFT JOIN CATEGORIES c ON
+        s.category_seq = c.category_seq WHERE s.category_seq = #{category_seq} GROUP BY s.shoe_seq; </select>
+
 
 </mapper>

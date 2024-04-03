@@ -1,5 +1,7 @@
 package com.example.demo.model;
 
+import java.util.List;
+
 import org.apache.ibatis.type.Alias;
 
 import lombok.Data;
@@ -9,6 +11,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Alias("Shoe")
 public class Shoes {
+
+    
     private int shoe_seq;
     private int category_seq;
     private String shoe;
@@ -23,5 +27,15 @@ public class Shoes {
     // 리뷰총수와 평균별점
     private int reviewCount;
     private double averageRating;
+    private List<Reviews> reviews;
+
+    public List<Reviews> getReviews() {
+        return reviews;
+    }
+
+    public void setReviews(List<Reviews> reviews) {
+        this.reviews = reviews;
+    }
+    
     
 }

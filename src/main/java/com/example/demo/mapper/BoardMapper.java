@@ -5,6 +5,7 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.example.demo.model.Board;
+import com.example.demo.model.Comment;
 
 @Mapper
 public interface BoardMapper {
@@ -16,4 +17,5 @@ public interface BoardMapper {
     void updateBoard(Board board);
     void increaseClickCount(int board_seq);
     List<Map<Integer, Integer>> getBoardClickCountsAsList();
+    List<Comment> getCommentsByBoardSeq(int board_seq);
 }

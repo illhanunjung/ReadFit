@@ -26,5 +26,8 @@
         WHERE comment_seq = #{comment_seq}
     </update>
 
+    <select id="getCommentsByBoardSeq" resultType="com.example.demo.model.Comment">
+        SELECT * FROM comments WHERE board_seq = #{board_seq}
+    </select>
 
 </mapper>

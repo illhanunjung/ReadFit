@@ -3,6 +3,7 @@ package com.example.demo.controller;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,6 +22,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
+import ch.qos.logback.classic.Logger;
 import jakarta.servlet.http.HttpSession;
 
 @RestController
@@ -40,15 +42,6 @@ public class MemberController {
         return memberService.getAllMembers();
     }
 
-    @PostMapping("/api/register")
-    public void registerMember(@RequestBody Member member) {
-        memberService.registerMember(member);
-    }
-
-    @GetMapping("/api/checkId/{memId}")
-    public boolean checkId(@PathVariable String memId) {
-        return memberService.checkId(memId);
-    }
 
     @PostMapping("/api/login")
     public String login(HttpSession session, @RequestBody HashMap<String, Object> member) {
@@ -80,8 +73,7 @@ public class MemberController {
         } else {
             return "로그인 실패";
         }
-    }
-
+}
         @PostMapping("/api/logout")
         public String logout(HttpSession session) {
             session.getAttribute("loginMember");
@@ -119,8 +111,27 @@ public class MemberController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("회원 정보를 찾을 수 없습니다.");
         }
     }
+
+    @PostMapping("/api/members/register")
+    public ResponseEntity<?> registerMember(@RequestBody Member member) {
+        try {
+            memberService.registerMember(member);           
+            return ResponseEntity.ok().body("회원가입에 성공하였습니다.");
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("회원가입에 실패하였습니다.");
+        }
+    }
     
+
+    // 아이디 중복 체크 엔드포인트
+    @GetMapping("/api/checkId/{memId}")
+    public ResponseEntity<?> checkId(@PathVariable String memId) {
+        boolean isAvailable = memberService.checkId(memId);
+        return ResponseEntity.ok().body(isAvailable);
+    }
+
     
+
     @PostMapping("/api/updatePhone")
 public ResponseEntity<?> updatePhone(HttpSession session, @RequestBody HashMap<String, String> phoneUpdateRequest) {
     // 세션에서 로그인한 사용자 정보를 가져옵니다.

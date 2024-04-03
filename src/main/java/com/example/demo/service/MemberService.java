@@ -19,12 +19,26 @@ public class MemberService {
     }
 
     // 회원 등록
-    public void registerMember(Member member) {
+    public void registerMember(Member member) throws Exception {
         memberMapper.registerMember(member);
     }
 
+
     // 아이디 중복 체크
     public boolean checkId(String memId) {
-        return memberMapper.checkId(memId) == null;
+        Integer count = memberMapper.checkId(memId);
+        return count != null && count > 0;
     }
+    
+    // 해당 멤버를 영구정지 상태로 변경
+    public void suspendMember(String memId) {
+        memberMapper.suspendMember(memId); 
+    }
+
+    // 해당 멤버의 정지 상태를 해제
+    public void unsuspendMember(String memId) {
+        memberMapper.unsuspendMember(memId); 
+    }
+
+
 }
