@@ -61,9 +61,9 @@ public List<Shoes> getShoesByCategorySeqs(@PathVariable int category_seq) {
 
 
 @GetMapping("/rboard/{shoe_seq}")
-public List<Reviews> getShoes(@PathVariable int shoe_seq) {
+public List<Shoes> getShoesByshoeseq(@PathVariable int shoe_seq) {
        
-    return shoesService.getShoes(shoe_seq);
+    return shoesService.getShoesByshoeseq(shoe_seq);
 }
 
 }

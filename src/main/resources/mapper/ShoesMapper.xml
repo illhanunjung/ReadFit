@@ -43,16 +43,23 @@
         SHOES s LEFT JOIN REVIEWS r ON s.shoe_seq = r.shoe_seq LEFT JOIN CATEGORIES c ON
         s.category_seq = c.category_seq WHERE s.category_seq = #{category_seq} GROUP BY s.shoe_seq; </select>
 
-    <select id="getShoes" resultType="com.example.demo.model.Reviews">
-        SELECT
-            s.*, r.review_seq, r.review, r.review_rating, r.review_status, r.review_at
-        FROM
-            SHOES s
-        LEFT JOIN
-            REVIEWS r ON s.shoe_seq = r.shoe_seq
-        WHERE
-            s.shoe_seq = #{shoe_seq}
+    <select id="getShoesByshoeseq" resultType="com.example.demo.model.Shoes">
+    SELECT
+    s.shoe_seq, s.category_seq,  s.shoe, s.shoe_price, s.shoe_img,
+    s.parent_category_seq, s.parent_category_seq_name,
+    IFNULL(COUNT(r.review_seq), 0) AS reviewCount,
+    IFNULL(AVG(CAST(r.review_rating AS DECIMAL(10, 2))), 0) AS averageRating 
+FROM
+    SHOES s 
+    LEFT JOIN REVIEWS r ON s.shoe_seq = r.shoe_seq 
+   
+WHERE
+    s.shoe_seq = #{shoe_seq}
+GROUP BY
+    s.shoe_seq;
     </select>
     
+
+
 
 </mapper>

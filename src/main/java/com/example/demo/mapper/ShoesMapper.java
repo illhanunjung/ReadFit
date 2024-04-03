@@ -29,5 +29,5 @@ public interface ShoesMapper {
     List<Shoes>  getShoesByCategorySeqs(@Param("category_seq") int category_seq);
     
 
-    List<Reviews> getShoes(int shoe_seq);
+    List<Shoes> getShoesByshoeseq(int shoe_seq);
 }
