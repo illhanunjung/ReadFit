@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.mapper.ShoesMapper;
+import com.example.demo.model.FavoriteShoesInfo;
 import com.example.demo.model.Reviews;
 import com.example.demo.model.Shoes;
 
@@ -39,10 +40,24 @@ public class ShoesService {
         return shoesMapper.getAllShoesWithReviews();
     }
 
- 
-
     public List<Shoes>  getShoesByCategorySeqs(int category_seq) {
         return shoesMapper. getShoesByCategorySeqs(category_seq);
     }
+
+    public List<Shoes> getTopThreeShoesByCategory(String parentCategoryName) {
+        List<Shoes> topThreeShoes = shoesMapper.getTopThreeShoesByCategory(parentCategoryName);
+    
+   
+            for (Shoes shoe : topThreeShoes) {
+                List<Reviews> reviews = shoesMapper.selectReviewsByShoeSeq(shoe.getShoe_seq());
+                shoe.setReviews(reviews);
+            }
+        
+        return topThreeShoes;
+        
+        
+    }
+
+
 }
 
