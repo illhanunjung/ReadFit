@@ -19,5 +19,8 @@ public class Reviews {
     private String  review_status;
     private Date review_at;
 
+    private int review_polarity;
+
     private List<Keyword> keywords;
+
 }

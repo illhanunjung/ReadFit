@@ -36,6 +36,7 @@ public interface MemberMapper {
 
     // 회원 정지 해제
     void unsuspendMember(@Param("mem_id") String memId);
+
 }
 
 

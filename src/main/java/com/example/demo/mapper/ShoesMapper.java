@@ -4,9 +4,6 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-
-import com.example.demo.model.FavoriteShoesInfo;
-import com.example.demo.model.KeywordCount;
 import com.example.demo.model.Reviews;
 import com.example.demo.model.Shoes;
 
@@ -32,4 +29,5 @@ public interface ShoesMapper {
 
     // List<Reviews> selectReviewsForShoe(@Param("shoe_seq") int shoe_seq);
 
+    List<Shoes> getShoesByshoeseq(int shoe_seq);
 }

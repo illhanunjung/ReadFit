@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.demo.mapper.CategoriesMapper;
 import com.example.demo.model.Categories;
+import com.example.demo.model.Shoes;
 
 
 @Service
@@ -22,4 +23,6 @@ public class CategoriesService {
     public List<Categories> getCategories() {
         return categoriesMapper.getCategories();
     }
+
+
 }

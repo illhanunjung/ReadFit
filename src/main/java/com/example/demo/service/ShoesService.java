@@ -31,7 +31,21 @@ public class ShoesService {
     }
 
 
+    // public List<Reviews> getShoes(int shoe_seq) {
+        
+    //     return shoesMapper.getShoes(shoe_seq);
+    // }
 
+    public List<Shoes> getShoesByshoeseq(int shoe_seq) {
+        List<Shoes> shoesList = shoesMapper.getShoesByshoeseq(shoe_seq);
+        for (Shoes shoes : shoesList) {
+            List<Reviews> reviews = shoesMapper.selectReviewsByShoeSeq(shoes.getShoe_seq());
+            shoes.setReviews(reviews);
+        }
+        return shoesList;
+    }
+
+    
     //   public List<Shoes> getShoess() {
     //     return shoesMapper.getShoess();
     // }
@@ -43,6 +57,7 @@ public class ShoesService {
     public List<Shoes>  getShoesByCategorySeqs(int category_seq) {
         return shoesMapper. getShoesByCategorySeqs(category_seq);
     }
+
 
     public List<Shoes> getTopThreeShoesByCategory(String parentCategoryName) {
         List<Shoes> topThreeShoes = shoesMapper.getTopThreeShoesByCategory(parentCategoryName);
@@ -60,4 +75,5 @@ public class ShoesService {
 
 
 }
+
 
