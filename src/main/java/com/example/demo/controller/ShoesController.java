@@ -70,13 +70,14 @@ public List<Shoes> getTopThreeShoesByCategory(@PathVariable String parentCategor
    
     return shoesService.getTopThreeShoesByCategory(parentCategoryName);
 
+}
+    @GetMapping("/rboard/{shoe_seq}")
+    public List<Shoes> getShoesByshoeseq(@PathVariable int shoe_seq) {
+           
+        return shoesService.getShoesByshoeseq(shoe_seq);
+    }
+    
 
-@GetMapping("/rboard/{shoe_seq}")
-public List<Shoes> getShoesByshoeseq(@PathVariable int shoe_seq) {
-       
-    return shoesService.getShoesByshoeseq(shoe_seq);
 
 }
 
-}
-}
