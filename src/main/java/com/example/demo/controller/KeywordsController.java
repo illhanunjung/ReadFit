@@ -30,7 +30,7 @@ public class KeywordsController {
     }
 
     
-    @GetMapping("/rboard/{shoe_seq}")
+    @GetMapping("/rboard/keyword/{shoe_seq}")
     public List<Keywords> selectKeywordsByshoeseq(@PathVariable int shoe_seq){
         
         return keywordsService.selectKeywordsByshoeseq(shoe_seq);
