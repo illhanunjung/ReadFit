@@ -3,10 +3,13 @@
 
 <mapper namespace="com.example.demo.mapper.BoardMapper">
 
+
     <select id="getAllBoards" resultType="com.example.demo.model.Board"> SELECT * FROM BOARDS ORDER BY board_seq ASC </select>
 
-    <select id="getBoardByReviewIdx" resultType="com.example.demo.model.Board"> SELECT * FROM BOARDS
-        WHERE board_seq = #{board_seq} </select>
+    <select id="getBoardByReviewIdx" resultType="com.example.demo.model.Board"> SELECT b.*, m.mem_profile
+FROM BOARDS b
+INNER JOIN MEMBERS m ON b.mem_id = m.mem_id
+WHERE b.board_seq = #{board_seq} </select>
 
     <delete id="deleteBoardBySeq">
         DELETE FROM BOARDS WHERE board_seq = #{board_seq}
