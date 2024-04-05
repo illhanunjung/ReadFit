@@ -4,9 +4,6 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-
-
-
 import com.example.demo.model.Reviews;
 import com.example.demo.model.Shoes;
 
@@ -26,8 +23,11 @@ public interface ShoesMapper {
     // 카테고리별로 키워드 정보를 집계하는 메서드
 
 
-    List<Shoes>  getShoesByCategorySeqs(@Param("category_seq") int category_seq);
+    List<Shoes>  getShoesByCategorySeqs(@Param("category_seq") int category_seq); 
     
+    List<Shoes> getTopThreeShoesByCategory(@Param("parent_category_seq_name") String parent_category_seq_name);
+
+    // List<Reviews> selectReviewsForShoe(@Param("shoe_seq") int shoe_seq);
 
     List<Shoes> getShoesByshoeseq(int shoe_seq);
 }

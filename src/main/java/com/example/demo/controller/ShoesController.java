@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.model.Reviews;
+
 import com.example.demo.model.Shoes;
 import com.example.demo.service.ShoesService;
 
@@ -60,10 +61,18 @@ public List<Shoes> getShoesByCategorySeqs(@PathVariable int category_seq) {
 }
 
 
-@GetMapping("/rboard/{shoe_seq}")
-public List<Shoes> getShoesByshoeseq(@PathVariable int shoe_seq) {
-       
-    return shoesService.getShoesByshoeseq(shoe_seq);
+@GetMapping("/shoes/topthree/{parentCategoryName}")
+public List<Shoes> getTopThreeShoesByCategory(@PathVariable String parentCategoryName) {
+   
+    return shoesService.getTopThreeShoesByCategory(parentCategoryName);
+
 }
+    @GetMapping("/rboard/{shoe_seq}")
+    public List<Shoes> getShoesByshoeseq(@PathVariable int shoe_seq) {
+           
+        return shoesService.getShoesByshoeseq(shoe_seq);
+    }
+    
+
 
 }

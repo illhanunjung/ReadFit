@@ -41,7 +41,89 @@
         s.parent_category_seq, s.parent_category_seq_name, IFNULL(COUNT(r.review_seq), 0) AS
         reviewCount, IFNULL(AVG(CAST(r.review_rating AS DECIMAL(10, 2))), 0) AS averageRating FROM
         SHOES s LEFT JOIN REVIEWS r ON s.shoe_seq = r.shoe_seq LEFT JOIN CATEGORIES c ON
-        s.category_seq = c.category_seq WHERE s.category_seq = #{category_seq} GROUP BY s.shoe_seq; </select>
+        s.category_seq = c.category_seq WHERE s.category_seq = #{category_seq} GROUP BY s.shoe_seq; 
+    </select>
+
+<!-- <select id="getTopThreeShoesByCategory" resultType="com.example.demo.model.Shoes">
+SELECT
+    s.shoe_seq,
+    s.category_seq,
+    c.category AS parent_category_seq,
+    s.shoe AS 이름,
+    s.shoe_price AS 가격,
+    s.shoe_img AS 이미지,
+    IFNULL(COUNT(DISTINCT r.review_seq), 0) AS reviewCount,
+    IFNULL(COUNT(DISTINCT f.favorite_seq), 0) AS favoritesCount,
+    IFNULL(AVG(CAST(r.review_rating AS DECIMAL(10, 2))), 0) AS averageRating
+FROM SHOES s
+JOIN CATEGORIES c ON s.category_seq = c.category_seq
+LEFT JOIN REVIEWS r ON s.shoe_seq = r.shoe_seq
+LEFT JOIN FAVORITES f ON s.shoe_seq = f.shoe_seq
+WHERE s.shoe_seq IN (
+    SELECT shoe_seq
+    FROM FAVORITES
+    WHERE shoe_seq IN (
+        SELECT shoe_seq
+        FROM SHOES
+        WHERE category_seq IN (
+            SELECT category_seq
+            FROM CATEGORIES
+            WHERE parent_category_seq = #{category_name}
+        )
+    )
+    GROUP BY shoe_seq
+    ORDER BY COUNT(shoe_seq) DESC
+    
+)
+GROUP BY s.shoe_seq
+ORDER BY favoritesCount DESC
+LIMIT 3
+</select> -->
+
+<select id="getTopThreeShoesByCategory" resultType="com.example.demo.model.Shoes">
+    SELECT
+    s.shoe_seq,
+    s.category_seq,
+    c.category,
+    s.shoe,
+    s.shoe_price,
+    s.shoe_img,
+    s.parent_category_seq,
+    s.parent_category_seq_name,
+    IFNULL(COUNT(DISTINCT r.review_seq), 0) AS reviewCount,
+    IFNULL(COUNT(DISTINCT f.favorite_seq), 0) AS favoritesCount,
+    IFNULL(AVG(CAST(r.review_rating AS DECIMAL(10, 2))), 0) AS averageRating
+FROM
+    SHOES s
+JOIN
+    CATEGORIES c ON s.category_seq = c.category_seq
+LEFT JOIN
+    REVIEWS r ON s.shoe_seq = r.shoe_seq
+LEFT JOIN
+    FAVORITES f ON s.shoe_seq = f.shoe_seq
+WHERE
+    s.shoe_seq IN (
+        SELECT shoe_seq
+        FROM FAVORITES
+        WHERE shoe_seq IN (
+            SELECT shoe_seq
+            FROM SHOES
+            WHERE category_seq IN (
+                SELECT category_seq
+                FROM CATEGORIES
+                WHERE parent_category_seq_name = #{parent_category_seq_name}
+            )
+        )
+        GROUP BY shoe_seq
+        ORDER BY COUNT(shoe_seq) DESC
+    )
+GROUP BY
+    s.shoe_seq
+ORDER BY
+    favoritesCount DESC, averageRating DESC, reviewCount DESC
+LIMIT 3;
+
+</select>
 
     <select id="getShoesByshoeseq" resultType="com.example.demo.model.Shoes">
     SELECT
@@ -62,4 +144,41 @@ GROUP BY
 
 
 
+
+
+
+<!-- SELECT
+    s.shoe_seq,
+    s.category_seq,
+    s.shoe,
+    s.shoe_price,
+    s.shoe_img,
+    c.parent_category_seq,
+    c.category,
+    IFNULL(COUNT(DISTINCT r.review_seq), 0) AS reviewCount,
+    IFNULL(COUNT(DISTINCT f.favorite_seq), 0) AS favoritesCount,
+    IFNULL(AVG(CAST(r.review_rating AS DECIMAL(10, 2))), 0) AS averageRating
+FROM SHOES s
+JOIN CATEGORIES c ON s.category_seq = c.category_seq
+LEFT JOIN REVIEWS r ON s.shoe_seq = r.shoe_seq
+LEFT JOIN FAVORITES f ON s.shoe_seq = f.shoe_seq
+WHERE s.shoe_seq IN (
+    SELECT shoe_seq
+    FROM FAVORITES
+    WHERE shoe_seq IN (
+        SELECT shoe_seq
+        FROM SHOES
+        WHERE category_seq IN (
+            SELECT category_seq
+            FROM CATEGORIES
+            WHERE parent_category_seq_name = #{parent_category_seq_name}
+        )
+    )
+    GROUP BY shoe_seq
+    ORDER BY COUNT(shoe_seq) DESC
+    
+)
+GROUP BY s.shoe_seq
+ORDER BY favoritesCount DESC
+LIMIT 3 -->
 </mapper>

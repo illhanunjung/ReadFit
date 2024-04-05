@@ -29,6 +29,9 @@ public class Shoes {
     private double averageRating;
     private List<Reviews> reviews;
 
+    private int favoritesCount;
+
+
     public List<Reviews> getReviews() {
         return reviews;
     }
