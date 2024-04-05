@@ -57,5 +57,17 @@
         ORDER BY board_seq ASC
     </select>
     
+    <select id="getBoardFavoriteCount"> SELECT COUNT(*) FROM `FAVORITE_BOARD` WHERE board_seq = #{board_seq} </select>
+    <select id="getUserInFavoriteBoardTable"> SELECT COUNT(*) FROM `FAVORITE_BOARD` WHERE board_seq = #{board_seq} AND mem_id = #{loginMember} </select>
 
+    <delete id="deleteFavoriteByBoardSeqAndLoginMember" parameterType="map">
+        DELETE FROM FAVORITE_BOARD
+        WHERE board_seq = #{board_seq} AND mem_id = #{loginMember}
+    </delete>
+
+    <insert id="insertFavoriteByBoardSeqAndLoginMember" parameterType="map">
+        INSERT INTO FAVORITE_BOARD (board_seq, mem_id)
+        VALUES (#{board_seq}, #{loginMember})
+    </insert>
+    
 </mapper>
