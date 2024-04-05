@@ -31,6 +31,9 @@ public class Shoes {
 
     private int favoritesCount;
 
+    private int positive_percentage;
+    private int negative_percentage;
+    private int neutral_percentage;
 
     public List<Reviews> getReviews() {
         return reviews;

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
 
 import com.example.demo.mapper.MemberMapper;
 import com.example.demo.model.Member;
@@ -43,37 +44,39 @@ public class MemberController {
     }
 
 
+
     @PostMapping("/api/login")
-    public String login(HttpSession session, @RequestBody HashMap<String, Object> member) {
-    //ResponseEntity<String>
-
+    public ResponseEntity<?> login(HttpSession session, @RequestBody HashMap<String, Object> member) {
         Gson gson = new Gson();
-        JsonElement jsoelement = gson.toJsonTree(member);
-        JsonObject json = jsoelement.getAsJsonObject();
-        System.out.println(json.get("mem_id").getAsString());
-
-        String mem_id=json.get("mem_id").getAsString() ;
-        String mem_pw=json.get("mem_pw").getAsString();
-        Member mem = new Member(mem_id,mem_pw);
-
-
+        JsonObject json = gson.toJsonTree(member).getAsJsonObject();
+    
+        String mem_id = json.get("mem_id").getAsString();
+        String mem_pw = json.get("mem_pw").getAsString();
+        Member mem = new Member(mem_id, mem_pw);
+    
         Member loginMember = memberMapper.memberSelect(mem);
-        if (loginMember != null ) {
+        if (loginMember != null) {
+            JsonObject resultJson = new JsonObject();
+            if (loginMember.getMem_role() == 0) {
+                resultJson.addProperty("error", "관리자용 로그인을 해주세요.");
+                return ResponseEntity.status(HttpStatus.FORBIDDEN).body(resultJson.toString());
+            }
+    
             session.setAttribute("loginMember", loginMember);
             
-
-            JsonObject resultJson = new JsonObject();
             resultJson.addProperty("id", loginMember.getMem_id());
             resultJson.addProperty("name", loginMember.getMem_name());
             resultJson.addProperty("birth", loginMember.getMem_birth());
             resultJson.addProperty("profile", loginMember.getMem_profile());
             resultJson.addProperty("phone", loginMember.getMem_phone());
             resultJson.addProperty("role", loginMember.getMem_role());
-            return resultJson.toString();
+            return ResponseEntity.ok(resultJson.toString());
         } else {
-            return "로그인 실패";
+            JsonObject resultJson = new JsonObject();
+            resultJson.addProperty("error", "로그인 실패");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(resultJson.toString());
         }
-}
+    }
         @PostMapping("/api/logout")
         public String logout(HttpSession session) {
             session.getAttribute("loginMember");

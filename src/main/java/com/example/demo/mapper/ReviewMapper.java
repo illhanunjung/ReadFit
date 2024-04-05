@@ -15,6 +15,8 @@ public interface ReviewMapper {
     List<Reviews> getTopReviewsByShoeSeq(@Param("shoeSeq") int shoeSeq);
     List<String> ReviewKeywordList(int shoe_seq);
     List<String> ReviewList(String keyword, int shoe_seq);
+
+    
 }
 
 
