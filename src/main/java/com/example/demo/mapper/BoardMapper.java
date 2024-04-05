@@ -18,4 +18,8 @@ public interface BoardMapper {
     void increaseClickCount(int board_seq);
     List<Map<Integer, Integer>> getBoardClickCountsAsList();
     List<Comment> getCommentsByBoardSeq(int board_seq);
+    int getBoardFavoriteCount(int board_seq);
+    boolean getUserInFavoriteBoardTable(int board_seq, String loginMember);
+    void deleteFavoriteByBoardSeqAndLoginMember(int board_seq, String loginMember);
+    void insertFavoriteByBoardSeqAndLoginMember(int board_seq, String loginMember);
 }

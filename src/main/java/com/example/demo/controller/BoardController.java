@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -47,18 +48,25 @@ public class BoardController {
         Map<String, Object> response = new HashMap<>();
         response.put("boardList", boardList);
         response.put("boardClickCountList", boardClickCountList);
-        System.out.println();
         return ResponseEntity.ok().body(response);
     }
 
     @GetMapping("/boards/{board_seq}")
-    public ResponseEntity<Object> getBoardAndCommentsByReviewIdx(@PathVariable int board_seq) {
+    public ResponseEntity<Object> getBoardAndCommentsByReviewIdx(@PathVariable int board_seq, @RequestHeader(value = "loginMember", required = false) String loginMember) {
         Board board = boardService.getBoardByReviewIdx(board_seq);
         List<Comment> commentList = commentMapper.getCommentsByReviewIdx(board_seq);
+        int boardFavoriteCount = boardService.getBoardFavoriteCount(board_seq);
+        System.out.println("boarFavoriteCount값입니다. : " + boardFavoriteCount);
+        System.out.println("loginMember값입니다. : " + loginMember);
         if (board != null) {
             Map<String, Object> response = new HashMap<>();
             response.put("board", board);
             response.put("comments", commentList);
+            response.put("favoriteCount", boardFavoriteCount);
+            if(loginMember != null){
+                boolean isUserInFavoriteBoardTable = boardService.getUserInFavoriteBoardTable(board_seq, loginMember);
+                response.put("isUserFavorite", isUserInFavoriteBoardTable);
+            }
             return ResponseEntity.ok(response);
         } else {
             return ResponseEntity.notFound().build();
@@ -202,6 +210,19 @@ public class BoardController {
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("댓글 조회 중 오류가 발생했습니다.");
+        }
+    }
+
+    @GetMapping("/boards/clickedHeart/{board_seq}")
+    public ResponseEntity<String> clickedHeart(@PathVariable int board_seq, @RequestHeader("loginMember") String loginMember) {
+        try {
+            if(loginMember != null){
+                boolean isUserInFavoriteBoardTable = boardService.getUserInFavoriteBoardTable(board_seq, loginMember);
+                boardService.clickUserFavoriteButton(isUserInFavoriteBoardTable, board_seq, loginMember);
+            }
+            return ResponseEntity.ok("좋아요 버튼 누르기 설정 성공");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("서버 오류 발생");
         }
     }
 
