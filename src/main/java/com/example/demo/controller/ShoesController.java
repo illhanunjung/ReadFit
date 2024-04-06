@@ -3,6 +3,7 @@ package com.example.demo.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -48,11 +49,6 @@ public List<Shoes> getShoesDetailsByCategory(@PathVariable String parentCategory
         return shoesService.getShoesByCategorySeqtop(parentCategoryName);
     }
 
-  
-
-
-
-
 @GetMapping("/shoe/{parentCategoryName}/{category_seq}")
 public List<Shoes> getShoesByCategorySeqs(@PathVariable int category_seq) {
     
@@ -64,6 +60,15 @@ public List<Shoes> getShoesByCategorySeqs(@PathVariable int category_seq) {
 public List<Shoes> getShoesByshoeseq(@PathVariable int shoe_seq) {
        
     return shoesService.getShoesByshoeseq(shoe_seq);
+}
+
+
+@GetMapping("/rboard/best/{parentCategoryName}/{shoe_price}")
+public ResponseEntity<List<Shoes>> getShoesByparentCategoryNameAndPriceRange(
+        @PathVariable String parentCategoryName,
+        @PathVariable int shoe_price) {
+    List<Shoes> shoes = shoesService.getShoesByparentCategoryNameAndPriceRange(parentCategoryName, shoe_price);
+    return ResponseEntity.ok(shoes);
 }
 
 }

@@ -30,4 +30,7 @@ public interface ShoesMapper {
     
 
     List<Shoes> getShoesByshoeseq(int shoe_seq);
+
+
+    List<Shoes> getShoesByParentCategoryAndPriceRange(String parentCategoryName, int shoe_price);
 }

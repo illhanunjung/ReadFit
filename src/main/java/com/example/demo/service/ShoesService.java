@@ -58,6 +58,12 @@ public class ShoesService {
     public List<Shoes>  getShoesByCategorySeqs(int category_seq) {
         return shoesMapper. getShoesByCategorySeqs(category_seq);
     }
+
+
+
+    public List<Shoes> getShoesByparentCategoryNameAndPriceRange(String parentCategoryName, int shoe_price) {
+        return shoesMapper.getShoesByParentCategoryAndPriceRange(parentCategoryName, shoe_price);
+    }
     
  
 
