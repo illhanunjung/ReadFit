@@ -58,6 +58,5 @@ public class AdminController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("회원 정지해제 실패");
         }}
 
-    // 여기에 추가적인 회원 관리 관련 API 엔드포인트를 구현할 수 있습니다.
 }
 
