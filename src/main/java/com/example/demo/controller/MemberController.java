@@ -41,64 +41,78 @@ public class MemberController {
     @GetMapping
     public List<Member> getAllMembers() {
         return memberService.getAllMembers();
-    }
-
-    @PostMapping("/api/adminlogin")
-    public ResponseEntity<?> adminlogin(HttpSession session, @RequestBody HashMap<String, Object> member) {
+        
+    
+    }@PostMapping("/api/adminlogin")
+    public String loginAdmin(HttpSession session, @RequestBody HashMap<String, Object> member) {
         Gson gson = new Gson();
-        JsonObject json = gson.toJsonTree(member).getAsJsonObject();
+        JsonElement jsonElement = gson.toJsonTree(member);
+        JsonObject json = jsonElement.getAsJsonObject();
     
         String mem_id = json.get("mem_id").getAsString();
         String mem_pw = json.get("mem_pw").getAsString();
         Member mem = new Member(mem_id, mem_pw);
     
         Member loginMember = memberMapper.memberSelect(mem);
-        JsonObject resultJson = new JsonObject();
-        if (loginMember != null && loginMember.getMem_role() == 0) {
-    
-            session.setAttribute("loginMember", loginMember);
-            
-            resultJson.addProperty("id", loginMember.getMem_id());
-            resultJson.addProperty("name", loginMember.getMem_name());
-            resultJson.addProperty("birth", loginMember.getMem_birth());
-            resultJson.addProperty("profile", loginMember.getMem_profile());
-            resultJson.addProperty("phone", loginMember.getMem_phone());
-            resultJson.addProperty("role", loginMember.getMem_role());
-
-            return ResponseEntity.ok(resultJson.toString());
-        } else {
-            resultJson.addProperty("error", "일반 사용자는 여기에서 로그인할 수 없습니다.");
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(resultJson.toString());
+        if (loginMember != null) {
+            if (loginMember.getMem_role() == 0) {
+                session.setAttribute("loginMember", loginMember);
+                
+                JsonObject resultJson = new JsonObject();
+                resultJson.addProperty("id", loginMember.getMem_id());
+                resultJson.addProperty("name", loginMember.getMem_name());
+                resultJson.addProperty("birth", loginMember.getMem_birth());
+                resultJson.addProperty("profile", loginMember.getMem_profile());
+                resultJson.addProperty("phone", loginMember.getMem_phone());
+                resultJson.addProperty("role", loginMember.getMem_role());
+                return resultJson.toString();
+            } else if (loginMember.getMem_role() == 2) {
+                return "2";
+                // "정지된 회원입니다."
+            } else if (loginMember.getMem_role() == 1) {
+                return "1";
+                // "일반회원 입니다."
+            }
         }
+        return "3";
+        //"로그인 실패"
     }
 
     @PostMapping("/api/login")
-    public ResponseEntity<?> login(HttpSession session, @RequestBody HashMap<String, Object> member) {
+    public String login(HttpSession session, @RequestBody HashMap<String, Object> member) {
         Gson gson = new Gson();
-        JsonObject json = gson.toJsonTree(member).getAsJsonObject();
-
+        JsonElement jsonElement = gson.toJsonTree(member);
+        JsonObject json = jsonElement.getAsJsonObject();
+    
         String mem_id = json.get("mem_id").getAsString();
         String mem_pw = json.get("mem_pw").getAsString();
         Member mem = new Member(mem_id, mem_pw);
-
+    
         Member loginMember = memberMapper.memberSelect(mem);
-        JsonObject resultJson = new JsonObject();
-        if (loginMember != null && loginMember.getMem_role() == 1) {
-        
-            session.setAttribute("loginMember", loginMember);
-            
-            resultJson.addProperty("id", loginMember.getMem_id());
-            resultJson.addProperty("name", loginMember.getMem_name());
-            resultJson.addProperty("birth", loginMember.getMem_birth());
-            resultJson.addProperty("profile", loginMember.getMem_profile());
-            resultJson.addProperty("phone", loginMember.getMem_phone());
-            resultJson.addProperty("role", loginMember.getMem_role());
-            return ResponseEntity.ok(resultJson.toString());
-        } else {
-            resultJson.addProperty("error", "관리자용 로그인을 해주세요.");
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(resultJson.toString());
+        if (loginMember != null) {
+            if (loginMember.getMem_role() == 1) {
+                session.setAttribute("loginMember", loginMember);
+                
+                JsonObject resultJson = new JsonObject();
+                resultJson.addProperty("id", loginMember.getMem_id());
+                resultJson.addProperty("name", loginMember.getMem_name());
+                resultJson.addProperty("birth", loginMember.getMem_birth());
+                resultJson.addProperty("profile", loginMember.getMem_profile());
+                resultJson.addProperty("phone", loginMember.getMem_phone());
+                resultJson.addProperty("role", loginMember.getMem_role());
+                return resultJson.toString();
+            } else if (loginMember.getMem_role() == 2) {
+                return "2";
+                // "정지된 회원입니다."
+            } else if (loginMember.getMem_role() == 0) {
+                return "0";
+                // "관리자 입니다."
+            }
         }
+        return "3";
+        //"로그인 실패"
     }
+    
         @PostMapping("/api/logout")
         public String logout(HttpSession session) {
             session.getAttribute("loginMember");
@@ -109,7 +123,6 @@ public class MemberController {
         
         @GetMapping("/api/checkLoginStatus")
         public String checkLoginStatus(HttpSession session) {
-            
             if (session.getAttribute("loginMember") != null) {
                 return "{\"isLoggedIn\": true}";
             } else {
