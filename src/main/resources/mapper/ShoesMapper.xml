@@ -197,6 +197,22 @@ GROUP BY
 
 
 
+<select id="getShoesByParentCategoryAndPriceRange" resultType="com.example.demo.model.Shoes">
+  SELECT s.shoe_seq, s.category_seq, c.category, s.shoe, s.shoe_price, s.shoe_img,
+         s.parent_category_seq, s.parent_category_seq_name
+  FROM SHOES s
+  LEFT JOIN REVIEWS r ON s.shoe_seq = r.shoe_seq
+  LEFT JOIN CATEGORIES c ON s.category_seq = c.category_seq
+  WHERE s.parent_category_seq_name = #{parentCategoryName}
+  AND s.shoe_price BETWEEN #{shoe_price} * 0.9 AND #{shoe_price} * 1.1
+  GROUP BY s.shoe_seq
+  ORDER BY ABS(s.shoe_price - #{shoe_price}), AVG(r.review_rating) DESC
+  LIMIT 3;
+</select>
+
+
+
+
 
 
 <!-- SELECT
@@ -233,4 +249,5 @@ WHERE s.shoe_seq IN (
 GROUP BY s.shoe_seq
 ORDER BY favoritesCount DESC
 LIMIT 3 -->
+
 </mapper>
