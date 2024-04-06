@@ -33,5 +33,22 @@ public class BoardService {
         return boardMapper.getCommentsByBoardSeq(board_seq);
     }
 
+    public int getBoardFavoriteCount(int board_seq) {
+        return boardMapper.getBoardFavoriteCount(board_seq);
+    }
+
+    public boolean getUserInFavoriteBoardTable(int board_seq, String loginMember) {
+        return boardMapper.getUserInFavoriteBoardTable(board_seq, loginMember);
+    }
+
+    public void clickUserFavoriteButton(boolean isUserInFavoriteBoardTable, int board_seq, String loginMember){
+        if(isUserInFavoriteBoardTable){
+            //Delete
+            boardMapper.deleteFavoriteByBoardSeqAndLoginMember(board_seq, loginMember);
+        }else{
+            //Insert
+            boardMapper.insertFavoriteByBoardSeqAndLoginMember(board_seq, loginMember);
+        }
+    }
 
 }

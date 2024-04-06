@@ -33,7 +33,10 @@ public interface FavoritesMapper {
     "s.parent_category_seq, " +
     "s.parent_category_seq_name, " +
     "IFNULL(COUNT(r.review_seq), 0) AS reviewCount, " +
-    "IFNULL(AVG(CAST(r.review_rating AS DECIMAL(10, 2))), 0) AS averageRating " +
+    "IFNULL(AVG(CAST(r.review_rating AS DECIMAL(10, 2))), 0) AS averageRating, " +
+    "ROUND((SUM(CASE WHEN r.review_polarity = 2 THEN 1 ELSE 0 END) * 100) / COUNT(*)) AS positive_percentage, " +
+    "ROUND((SUM(CASE WHEN r.review_polarity = 1 THEN 1 ELSE 0 END) * 100) / COUNT(*)) AS negative_percentage, " +
+    "ROUND((SUM(CASE WHEN r.review_polarity = 0 THEN 1 ELSE 0 END) * 100) / COUNT(*)) AS neutral_percentage " +
     "FROM " +
     "SHOES s " +
     "INNER JOIN FAVORITES f ON s.shoe_seq = f.shoe_seq " +

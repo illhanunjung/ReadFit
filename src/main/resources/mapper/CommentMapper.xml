@@ -3,8 +3,13 @@
 
 <mapper namespace="com.example.demo.mapper.CommentMapper">
 
-    <select id="getCommentsByReviewIdx" resultType="com.example.demo.model.Comment"> SELECT * FROM
-        COMMENTS WHERE board_seq = #{ board_seq}
+    <select id="getCommentsByReviewIdx" resultType="com.example.demo.model.Comment"> SELECT 
+    c.*, 
+    m.mem_profile 
+FROM
+    COMMENTS c
+INNER JOIN MEMBERS m ON c.mem_id = m.mem_id
+WHERE c.board_seq = #{board_seq};
     </select>
 
     <!-- CommentMapper.xml에 insert 쿼리 추가 -->

@@ -28,11 +28,19 @@ public class Shoes {
     private double averageRating;
     private List<Reviews> reviews;
 
+
     // 긍정 비율
     private double positiveRatio;
 
     // 부정 비율
     private double negativeRatio;
+
+    private int favoritesCount;
+
+    private int positive_percentage;
+    private int negative_percentage;
+    private int neutral_percentage;
+
 
     public List<Reviews> getReviews() {
         return reviews;

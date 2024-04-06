@@ -13,4 +13,6 @@ public class Board {
     private String board_content;
     private LocalDateTime board_at;
     private String board_img;
+
+    private String mem_profile;
 }
