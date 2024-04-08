@@ -172,7 +172,7 @@ public class MemberController {
     @PostMapping("/api/members/register")
     public ResponseEntity<?> registerMember(@RequestBody Member member) {
         try {
-            memberService.registerMember(member);           
+            memberService.registerMember(member);
             return ResponseEntity.ok().body("회원가입에 성공하였습니다.");
         } catch (Exception e) {
             return ResponseEntity.badRequest().body("회원가입에 실패하였습니다.");
