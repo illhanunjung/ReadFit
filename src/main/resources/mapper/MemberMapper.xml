@@ -9,8 +9,8 @@
 
     <!-- 회원 등록 -->
     <insert id="registerMember"> 
-        INSERT INTO MEMBERS (mem_id, mem_pw, mem_name, mem_birth,mem_profile, mem_phone) 
-        VALUES (#{mem_id}, MD5(#{mem_pw}), #{mem_name}, #{mem_birth}, #{mem_profile}, #{mem_phone}) 
+        INSERT INTO MEMBERS (mem_id, mem_pw, mem_name, mem_birth,mem_profile, mem_phone, mem_role, mem_email)
+        VALUES (#{mem_id}, MD5(#{mem_pw}), #{mem_name}, #{mem_birth}, #{mem_profile}, #{mem_phone}, 1, #{mem_email})
         </insert>
 
     <!-- 아이디 중복 체크 -->
