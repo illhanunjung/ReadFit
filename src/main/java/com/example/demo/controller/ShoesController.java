@@ -70,4 +70,11 @@ public ResponseEntity<List<Shoes>> getShoesByparentCategoryNameAndPriceRange(
     return ResponseEntity.ok(shoes);
 }
 
+@GetMapping("/shoes/topthree/{parentCategoryName}")
+public List<Shoes> getTopThreeShoesByCategory(@PathVariable String parentCategoryName) {
+   
+    return shoesService.getTopThreeShoesByCategory(parentCategoryName);
+
+}
+
 }
