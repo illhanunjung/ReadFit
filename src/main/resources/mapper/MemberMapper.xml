@@ -38,8 +38,8 @@
         resultType="com.example.demo.model.Member"> SELECT * FROM MEMBERS WHERE mem_name=#{mem_name}
         and mem_phone=#{mem_phone} </select>
 
-    <select id="memberFindPw" parameterType="com.example.demo.model.Member"
-        resultType="com.example.demo.model.Member"> SELECT * FROM MEMBERS WHERE mem_id=#{mem_id} and
+    <select id="memberFindEmail" parameterType="com.example.demo.model.Member"
+        resultType="com.example.demo.model.Member"> SELECT mem_email FROM MEMBERS WHERE mem_id=#{mem_id} and
         mem_phone=#{mem_phone} </select>
 
     <update id="updatePhone" parameterType="com.example.demo.model.Member"> UPDATE MEMBERS SET

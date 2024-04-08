@@ -3,18 +3,18 @@ package com.example.demo.controller;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.http.ResponseEntity;
 
 import com.example.demo.mapper.MemberMapper;
 import com.example.demo.model.Member;
@@ -23,7 +23,6 @@ import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
-import ch.qos.logback.classic.Logger;
 import jakarta.servlet.http.HttpSession;
 
 @RestController
@@ -38,9 +37,15 @@ public class MemberController {
     @Autowired
     private MemberMapper memberMapper;
 
+    @Autowired
+    private JavaMailSender mailSender;
+
+
     @GetMapping
     public List<Member> getAllMembers() {
         return memberService.getAllMembers();
+
+      
         
     
     }@PostMapping("/api/adminlogin")
@@ -142,9 +147,23 @@ public class MemberController {
 
     @PostMapping("/api/findPw")
     public ResponseEntity<?> findPw(@RequestBody Member member){
-        Member findMemberPw = memberMapper.memberFindPw(member);
-        if (findMemberPw != null ) {
-            return ResponseEntity.ok(findMemberPw);
+        Member findMemberEmail = memberMapper.memberFindEmail(member);
+        if (findMemberEmail != null ) {
+
+            String newPassword = generateRandomPassword();
+            
+            member.setMem_pw(newPassword);
+            memberMapper.updatePassword(member);
+
+            // System.out.println(member.getMem_id() + "의 새로운 비밀번호는 " + newPassword + "입니다.");
+
+            SimpleMailMessage message = new SimpleMailMessage();
+            message.setTo(findMemberEmail.getMem_email());
+            message.setSubject("[ReadFit]" + member.getMem_id()+"님의 새로운 비빌번호가 발급되었습니다.");
+            message.setText("회원님의 새로운 비밀번호는 [ " + newPassword + " ] 입니다.");
+            mailSender.send(message);
+
+            return ResponseEntity.ok(findMemberEmail);
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("회원 정보를 찾을 수 없습니다.");
         }
@@ -223,6 +242,24 @@ public ResponseEntity<?> updatePassword(HttpSession session, @RequestBody HashMa
     } catch (Exception e) {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("비밀번호 변경 중 오류가 발생했습니다.");
     }
+}
+
+// 랜덤한 비밀번호 생성 메소드
+private String generateRandomPassword() {
+    String upperCaseLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    String lowerCaseLetters = "abcdefghijklmnopqrstuvwxyz";
+    String numbers = "0123456789";
+    String specialCharacters = "!@#$%^&*()-_=+";
+    String allCharacters = upperCaseLetters + lowerCaseLetters + numbers + specialCharacters;
+
+    StringBuilder password = new StringBuilder();
+
+    for (int i = 0; i < 10; i++) { // 10자리의 랜덤 비밀번호 생성
+        int index = (int) (Math.random() * allCharacters.length());
+        password.append(allCharacters.charAt(index));
+    }
+
+    return password.toString();
 }
 
 
