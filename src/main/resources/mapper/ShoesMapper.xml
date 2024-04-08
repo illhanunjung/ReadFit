@@ -222,6 +222,7 @@ GROUP BY
   LEFT JOIN CATEGORIES c ON s.category_seq = c.category_seq
   WHERE s.parent_category_seq_name = #{parentCategoryName}
   AND s.shoe_price BETWEEN #{shoe_price} * 0.9 AND #{shoe_price} * 1.1
+  AND s.shoe_seq != #{shoe_seq}
   GROUP BY s.shoe_seq
   ORDER BY ABS(s.shoe_price - #{shoe_price}), AVG(r.review_rating) DESC
   LIMIT 3;
