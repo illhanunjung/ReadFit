@@ -44,7 +44,7 @@ public class RBoardController {
             // System.out.println("review_count: " + reviewSummaryInTable.get("review_count"));
             
             String reviewSummaryIn = (String)reviewSummaryInTable.get("summary_text");
-            
+            reviewSummaryIn = reviewSummaryIn.substring(1, reviewSummaryIn.length() - 1);
             String[] items = reviewSummaryIn.split(", ");
 
             for (String item : items) {
