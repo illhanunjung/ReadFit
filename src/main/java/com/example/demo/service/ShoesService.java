@@ -58,6 +58,16 @@ public class ShoesService {
     }
 
 
+
+
+    public List<Shoes> getShoesByparentCategoryNameAndPriceRange(String parentCategoryName, int shoe_price) {
+        return shoesMapper.getShoesByParentCategoryAndPriceRange(parentCategoryName, shoe_price);
+    }
+    
+ 
+
+
+
     public List<Shoes> getTopThreeShoesByCategory(String parentCategoryName) {
         List<Shoes> topThreeShoes = shoesMapper.getTopThreeShoesByCategory(parentCategoryName);
     
@@ -69,6 +79,11 @@ public class ShoesService {
         
         return topThreeShoes;
         
+        
+    }
+
+    public List<Shoes> getShoesByparentCategoryName(String parentCategoryName, int shoe_price) {
+        return shoesMapper.getShoesByParentCategoryAndPriceRange(parentCategoryName,shoe_price);
         
     }
 

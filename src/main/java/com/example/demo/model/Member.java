@@ -1,10 +1,10 @@
 package com.example.demo.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
-import lombok.Setter;
 import lombok.NoArgsConstructor;
-import lombok.AllArgsConstructor;
+import lombok.Setter;
 
 @Data
 @NoArgsConstructor
@@ -20,6 +20,7 @@ public class Member {
     private String mem_phone;
     private int mem_role;
     private String joined_at;
+    private String mem_email;
 
       // 필요한 다른 속성들을 추가할 수 있습니다.
       public Member(String mem_id, String mem_pw){

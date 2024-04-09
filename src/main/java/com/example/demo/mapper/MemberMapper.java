@@ -22,7 +22,7 @@ public interface MemberMapper {
 
     Member memberSelect(Member member);
     Member memberFindId(Member member);
-    Member memberFindPw(Member member);
+    Member memberFindEmail(Member member);
 
     //업데이트 메소드
     void updatePhone(Member member);

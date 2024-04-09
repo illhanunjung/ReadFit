@@ -30,4 +30,7 @@ public interface ShoesMapper {
     // List<Reviews> selectReviewsForShoe(@Param("shoe_seq") int shoe_seq);
 
     List<Shoes> getShoesByshoeseq(int shoe_seq);
+
+
+    List<Shoes> getShoesByParentCategoryAndPriceRange(String parentCategoryName, int shoe_price);
 }

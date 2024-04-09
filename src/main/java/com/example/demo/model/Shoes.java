@@ -12,7 +12,6 @@ import lombok.NoArgsConstructor;
 @Alias("Shoe")
 public class Shoes {
 
-    
     private int shoe_seq;
     private int category_seq;
     private String shoe;
@@ -29,11 +28,19 @@ public class Shoes {
     private double averageRating;
     private List<Reviews> reviews;
 
+
+    // 긍정 비율
+    private double positiveRatio;
+
+    // 부정 비율
+    private double negativeRatio;
+
     private int favoritesCount;
 
     private int positive_percentage;
     private int negative_percentage;
     private int neutral_percentage;
+
 
     public List<Reviews> getReviews() {
         return reviews;
@@ -43,5 +50,19 @@ public class Shoes {
         this.reviews = reviews;
     }
     
-    
+    public double getPositiveRatio() {
+        return positiveRatio;
+    }
+
+    public void setPositiveRatio(double positiveRatio) {
+        this.positiveRatio = positiveRatio;
+    }
+
+    public double getNegativeRatio() {
+        return negativeRatio;
+    }
+
+    public void setNegativeRatio(double negativeRatio) {
+        this.negativeRatio = negativeRatio;
+    }    
 }
