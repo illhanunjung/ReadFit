@@ -1,6 +1,7 @@
 package com.example.demo.mapper;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -15,7 +16,8 @@ public interface ReviewMapper {
     List<Reviews> getTopReviewsByShoeSeq(@Param("shoeSeq") int shoeSeq);
     List<String> ReviewKeywordList(int shoe_seq);
     List<String> ReviewList(String keyword, int shoe_seq);
-
+    Map<String, Object> searchReviewSummarybyshoeSeq(int shoe_seq);
+    void saveReviewSummary(int shoe_seq, String summary_text);
     
 }
 
