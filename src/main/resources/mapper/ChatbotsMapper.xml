@@ -13,7 +13,5 @@
         bot_answer FROM CHATBOTS WHERE mem_id = #{mem_id} GROUP BY session_seq, mem_id ORDER BY
         MAX(creat_at) DESC;</select>
 
-    <!-- <select id="findChatByMemIdAndSession_seq" parameterType="map"
-        resultType="com.example.demo.model.Chatbots"> SELECT chat_seq, mem_id, contents, creat_at,
-        bot_answer FROM CHATBOTS WHERE session_seq = #{session_seq} AND mem_id = #{mem_id} </select> -->
+
 </mapper>

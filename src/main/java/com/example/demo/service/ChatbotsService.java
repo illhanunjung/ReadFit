@@ -32,7 +32,7 @@ public class ChatbotsService {
         return chatbotsMapper.findAllChatsGroupedBySessionSeq(mem_id);
     }
 
-    // public Chatbots findChatByMemIdAndSession_seq(String mem_id, String session_seq) {
-    //     return chatbotsMapper.findChatByMemIdAndSession_seq(mem_id, session_seq);
-    // }
+    public List<Chatbots> findChatByMemIdAndSession_seq(String mem_id, String session_seq) {
+        return chatbotsMapper.findChatByMemIdAndSession_seq(mem_id, session_seq);
+    }
 }

@@ -40,8 +40,9 @@ public class ChatbotsController {
         return ResponseEntity.ok(chatbotService.findAllChatsGroupedBySessionSeq(mem_id));
     }
 
-    // @GetMapping("/{mem_id}/{session_seq}")
-    // public ResponseEntity<Chatbots> getChatByMemIdAndSession_seq(@PathVariable String mem_id, @PathVariable String session_seq) {
-    //     return ResponseEntity.ok(chatbotService.findChatByMemIdAndSession_seq(mem_id, session_seq));
-    // }
+    @GetMapping("/{mem_id}/{session_seq}")
+    public ResponseEntity<List<Chatbots>> getChatByMemIdAndSession_seq(@PathVariable String mem_id, @PathVariable String session_seq) {
+        List<Chatbots> chatbots = chatbotService.findChatByMemIdAndSession_seq(mem_id, session_seq);
+        return ResponseEntity.ok(chatbots);
+    }
 }
