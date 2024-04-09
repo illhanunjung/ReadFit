@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.mapper.ShoesMapper;
-import com.example.demo.model.FavoriteShoesInfo;
 import com.example.demo.model.Reviews;
 import com.example.demo.model.Shoes;
 
