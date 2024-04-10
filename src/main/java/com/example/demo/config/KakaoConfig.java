@@ -11,5 +11,4 @@ import lombok.Data;
 public class KakaoConfig {
     private String clientId;
     private String redirectUri;
-
 }

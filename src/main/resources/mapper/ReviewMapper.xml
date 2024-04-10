@@ -25,6 +25,18 @@
            AND r.review_seq IN (SELECT DISTINCT(review_seq) as rs FROM REVIEWS WHERE shoe_seq=#{shoe_seq});
     </select>
 
+
+    <select id="searchReviewSummarybyshoeSeq" resultType="java.util.Map">
+        SELECT review_summary_seq, shoe_seq, summary_text, review_count
+        FROM REVIEW_SUMMARY
+        WHERE shoe_seq = #{shoe_seq}
+    </select>
+
+
+    <insert id="saveReviewSummary" parameterType="map">
+        INSERT INTO REVIEW_SUMMARY (shoe_seq, summary_text)
+        VALUES (#{shoe_seq}, #{summary_text})
+    </insert>
     
 
 </mapper>
