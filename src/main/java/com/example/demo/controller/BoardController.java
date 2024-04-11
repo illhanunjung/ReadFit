@@ -164,7 +164,6 @@ public class BoardController {
 
     @PostMapping("/boards/boardWrite")
     public ResponseEntity<?> writeBoard(@RequestBody Board newBoard) {
-        System.out.println("board_seq값 입니다. : " + newBoard.getBoard_seq());
         Board searchBoard = boardService.getBoardByReviewIdx(newBoard.getBoard_seq());
         try {
             if (searchBoard == null) {

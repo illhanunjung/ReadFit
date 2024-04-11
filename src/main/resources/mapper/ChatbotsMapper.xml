@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.ChatbotsMapper">
+    <insert id="saveChatbots" parameterType="list"> INSERT INTO CHATBOTS (session_seq,mem_id,
+        contents, bot_answer, creat_at) VALUES <foreach collection="list" item="chatbot"
+            separator=","> (#{chatbot.session_seq},#{chatbot.mem_id}, #{chatbot.contents},
+        #{chatbot.bot_answer}, #{chatbot.creat_at}) </foreach>
+    </insert>
+    <select id="findAllChatsGroupedBySessionSeq" resultType="com.example.demo.model.Chatbots">
+        SELECT MAX(chat_seq), mem_id, session_seq, MAX(CASE WHEN contents IS NOT NULL THEN contents
+        ELSE NULL END) AS contents, MAX(CASE WHEN creat_at IS NOT NULL THEN creat_at ELSE NULL END)
+        AS creat_at, MAX(CASE WHEN bot_answer IS NOT NULL THEN bot_answer ELSE NULL END) AS
+        bot_answer FROM CHATBOTS WHERE mem_id = #{mem_id} GROUP BY session_seq, mem_id ORDER BY
+        MAX(creat_at) DESC;</select>
+
+
+</mapper>
