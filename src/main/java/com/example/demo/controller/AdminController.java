@@ -19,8 +19,10 @@ import com.example.demo.service.MemberService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api") 
 @CrossOrigin(origins = "http://localhost:3000")
+
+
 public class AdminController {
     
 
