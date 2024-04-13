@@ -32,7 +32,7 @@ public class RBoardController {
     public ResponseEntity<?> getKeywordReviewSummary(@RequestParam("shoe_seq") int shoe_seq) {
         Map<String, String> reviewSummary = new HashMap<>();
         Map<String, Object> response = new HashMap<>();
-        System.out.println("리뷰 시퀀스 값입니다. : " + shoe_seq);
+        System.out.println("슈 시퀀스 값입니다. : " + shoe_seq);
         List<String> ReviewKeywordList = reviewMapper.ReviewKeywordList(shoe_seq);
         // review을 개수도 REVIEW_SUMMARY에 넣어줘야 한다.
         Map<String, Object> reviewSummaryInTable = reviewMapper.searchReviewSummarybyshoeSeq(shoe_seq);
@@ -60,7 +60,7 @@ public class RBoardController {
             //     System.out.println(key + ": " + reviewSummary.get(key));
             // }
         } else {
-
+            // System.out.println("여기 들어왔습니다.");
             String text = "";
 
             if (ReviewKeywordList.size() > 0) {
@@ -87,8 +87,12 @@ public class RBoardController {
                     // ReviewSummary.py 파일의 절대 경로 생성
                     String pythonScriptPath = currentDir
                             + "\\src\\main\\java\\com\\example\\demo\\python\\ReviewSummary.py";
-                    // System.out.println("파이썬 파일 경로입이다. : " + pythonScriptPath);
 
+                    System.out.println("currentDir입니다 : " + currentDir);
+                    // System.out.println("pythonScriptPath입니다1 : " + pythonScriptPath);
+                    pythonScriptPath = pythonScriptPath.replace("ReadFit-frontend", "ReadFit");
+                    // System.out.println("pythonScriptPath입니다2 : " +pythonScriptPath);
+                    // System.out.println("파이썬 파일 경로입이다. : " + pythonScriptPath);
                     String review = combinedReviews;
 
                     // System.out.println(ReviewKeywordList.get(i) + ": ");
