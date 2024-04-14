@@ -258,7 +258,7 @@
 
 
 <details>
-<summary><b>팀원 최죠</b></summary>
+<summary><b>팀원 최지호</b></summary>
 <div markdown="1">
   
 #### `Front-End`
