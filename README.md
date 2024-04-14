@@ -181,7 +181,7 @@
 </details> 
 
 <details>
-<summary><b>이진근 </b></summary>
+<summary><b>팀원 이진근</b></summary>
 <div markdown="1">
   
 #### `Front-End`
