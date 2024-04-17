@@ -245,6 +245,7 @@
 - RAG 구조를 활용한 LLM (gpt3.5)모델 챗봇 개발
 - Transformer Kc-ELECTRA 모델 활용 키워드 분석모델 개발
 - Transformer Ko-ELECTRA 모델 활용 긍/부정 분석모델 개발
+- Pipeline으로 두 모델을 합쳐서 최종 모델 구현
 
 #### `설계`
 - 유스케이스
