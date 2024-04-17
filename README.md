@@ -84,29 +84,70 @@
 ![image](https://github.com/illhanunjung/ReadFit/assets/144203058/04e148d4-fc45-4ffc-b21a-98f592617741)
 
  <br>
-[코드 확인](https://github.com/illhanunjung/ReadFit-frontend/blob/main/src/pages/Rboard.js)
-- 업로드 예정
+[코드 확인](https://github.com/illhanunjung/ReadFit-frontend/blob/main/src/pages/KeywordPol.js)
+- 데이터 관리
+  - 리뷰 데이터를 Ko-electra 긍/부정 모델과 Kc-electra 키워드 분석 모델로 분석 후 키워드 별로 분리합니다.
+  - 분석된 키워드 데이터를 리뷰 데이터를 Ko-electra 긍/부정 모델로 분석한 데이터 데이터베이스에 저장합니다.
+- 데이터 불러오기
+  - Aixos를 통해 SHOES 테이블의 shoe_seq와 REVIEWS 테이블의 review_seq로 조회된 KEYWORDS 테이블의 키워드 별 긍/부정 정보를 가져옵니다.
+- 데이터 관리 
+  - 데이터를 가져온 이후 각각의 긍정/부정/중립 데이터로 분리하여 for each문을 사용하여 count 합니다.
+- 데이터 게시
+  - chart.js로 제작한 막대그래프를 활용했습니다.
+  - count된 각 데이터를 data 값으로 추가한 뒤 각 특성의 색깔에 맞게 색상을 정해서 게시하였습니다.
 <br>
 
 ### 4.4 키워드별 긍/부정 분석
 ![image](https://github.com/illhanunjung/ReadFit/assets/144203058/36f4d8d9-2123-4134-b6c2-2d682a0d86d5)
 <br>
 [코드 확인](https://github.com/illhanunjung/ReadFit-frontend/blob/main/src/pages/Rboard.js)
-- 업로드 예정
+- 데이터 관리
+  - 리뷰 데이터를 Ko-electra 긍/부정 모델과 Kc-electra 키워드 분석 모델로 분석 후 키워드 별로 분리합니다.
+  - 분석된 키워드 데이터를 리뷰 데이터를 Ko-electra 긍/부정 모델로 분석한 데이터 데이터베이스에 저장합니다.
+- 데이터 불러오기
+  - Aixos를 통해 SHOES 테이블의 shoe_seq와 REVIEWS 테이블의 review_seq로 조회된 KEYWORDS 테이블의 키워드 별 긍/부정 정보를 가져옵니다.
+- 데이터 관리
+  - 키워드 클릭시 활성화되는 SetActiveCategory를 통해 생성된 activeCategory값과 KEYWORDS 에서 가져온 데이터의 keyword_name 데이터를 비교합니다.
+  - activeCategory값과 keyword_name이 일치하는 데이터만 가져온 뒤 긍정/부정/중립 데이터로 분리하여 for each문을 사용하여 count 합니다.
+- 데이터 게시
+  - chart.js로 제작한 막대그래프를 활용했습니다.
+  - count된 각 데이터를 data 값으로 추가한 뒤 각 특성의 색깔에 맞게 색상을 정해서 게시하였습니다.
 <br>
 
 ### 4.5 리뷰 하이라이트
 ![image](https://github.com/illhanunjung/ReadFit/assets/144203058/036c888e-21ed-4c5a-a9e9-ab584b432314)
 <br>
-[코드 확인]()
-- 업로드 예정
+[코드 확인](https://github.com/illhanunjung/ReadFit-frontend/blob/main/src/components/ReviewCard.js)
+- 데이터 관리
+  - 리뷰 데이터를 Ko-electra 긍/부정 모델과 Kc-electra 키워드 분석 모델로 분석 후 키워드 별로 분리합니다.
+  - 분석된 키워드 데이터를 리뷰 데이터를 Ko-electra 긍/부정 모델로 분석한 데이터 데이터베이스에 저장합니다.
+- 데이터 불러오기
+  - Aixos를 통해 SHOES 테이블의 shoe_seq와 REVIEWS 테이블의 review_seq로 조회된 KEYWORDS 테이블의 모든 정보를 가져옵니다.
+  - - Aixos를 통해 SHOES 테이블의 shoe_seq로 조회된 REVIEWS 테이블의 모든 정보를 가져옵니다.
+- 데이터 관리
+  - 키워드 클릭시 활성화되는 SetActiveCategory를 통해 생성된 activeCategory값과 KEYWORDS 에서 가져온 데이터의 keyword_name 데이터를 비교합니다.
+  - activeCategory값과 keyword_name이 일치하는 데이터만 가져온 뒤 해당 데이터 내에 있는 start_idx값과 end_idx값을 가져옵니다.
+  - Reviews테이블의 review 컬럼의 리뷰원문을 가져온 뒤 start_idx와 (end_idx +1)을 기준으로 HighlightText를 생성합니다.
+- 데이터 게시
+  - 1. ReviewCard 컴포넌트에서 리뷰 원문을 게시합니다.
+  - 2. 리뷰 원문을 기준으로 HighlightText로 지정된 범위의 경우 #E8FD8D의 색상으로 background-color를 지정합니다.
+  - 3. 길이가 긴 리뷰가 존재하기에 리뷰 원문을 최대100자를 보여준 뒤 더보기/숨기기 버튼을 통해 추가 리뷰 확인 작업을 진행할 수 있도록 합니다.
+  - 순서를 이렇게 진행한 이유는 하이라이팅 처리 이전에 글자 수를 100자로 지정하면 하이라이트 부분이 존재하는 상품도 100자 이하인 경우 하이라이팅이 되지 않았습니다.
 <br>
 
 ### 4.6 리뷰 긍/부정 분석
 <img width="491" alt="image" src="https://github.com/illhanunjung/ReadFit/assets/144203058/f599af79-a1bf-4345-988f-7a73a286c9dd">
 <br>
-[코드 확인]()
-- 업로드 예정
+[코드 확인](https://github.com/illhanunjung/ReadFit-frontend/blob/main/src/components/ReviewCard.js)
+- 데이터 관리
+  - 리뷰 데이터를 Ko-electra 긍/부정 모델로 분석 후 긍정/부정/중립 데이터로 저장합니다.
+- 데이터 불러오기
+  - Aixos를 통해 SHOES 테이블의 shoe_seq로 조회된 REVIEWS 테이블의 리뷰 긍정/부정 데이터를 불러옵니다.
+- 데이터 관리
+  - 불러온 Label 데이터를 텍스트로 변환한 뒤 긍정이면 텍스트 색상을 파란색으로 부정이면 빨간색 중립이면 회색으로 넣을 수 있도록 데이터를 준비해 놓습니다.
+- 데이터 게시
+  - 긍정 부정 중립으로 분리해놓은 데이터를 리뷰 컴포넌트로 이동시킵니다.
+  - 리뷰 상단 부분에 게시하였습니다.
 <br>
 
 ### 4.7 리뷰 한줄요약
